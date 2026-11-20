@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sinapsi Platform by Stefano Ursino</title>
+<meta name="description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: one door, one source of truth and honestly labelled rules, run on my own infrastructure.">
+<!-- STAGING: remove the next line at launch -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://sinapsi.insalata-fresca.ch/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sinapsi Platform by Stefano Ursino">
+<meta property="og:description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: one door, one source of truth and honestly labelled rules, run on my own infrastructure.">
+<meta property="og:url" content="https://sinapsi.insalata-fresca.ch/">
+<meta name="color-scheme" content="light dark">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Stefano Ursino",
+  "url": "https://sinapsi.insalata-fresca.ch/",
+  "sameAs": [
+    "https://github.com/insalata-fresca"
+  ],
+  "description": "Personal engineering lab for agentic software delivery: a platform approach to running AI agents."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout concept: the Sinapsi control-center palette (cool grey paper, blue-grey ink, one action blue,
+   teal / indigo / amber for meaning). The page opens on the architecture drawing, then explains why it transfers. */
+:root {
+  --bg: #F5F6F6;
+  --paper: #FFFFFF;
+  --line: #D8E1E5;
+  --ink: #263238;
+  --ink2: #374649;
+  --muted: #5E7079;
+  --act: #0062C4;
+  --act-tint: #E6F0FB;
+  --on-act: #FFFFFF;
+  --t-t: #00684F; --t-b: #E3F4EF;
+  --i-t: #3A2BD6; --i-b: #ECEBFF;
+  --a-t: #7A4A00; --a-b: #FDF1DC;
+  --r-t: #A1221B; --r-b: #FBECEB;
+  --g-t: #4F5F66; --g-b: #EEF1F2;
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
+    --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
+    --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
+    --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
+  --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
+  --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
+  --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+a { color: var(--act); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 3px solid var(--act); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+.mono { font-family: var(--font-mono); }
+
+/* masthead */
+.mast { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+.brand svg { width: 34px; height: 22px; flex: none; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-family: var(--font-mono); font-size: 12.5px; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--act); }
+
+/* sections */
+.sec { padding-block: 52px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--act); }
+.sec > h2 { font-size: clamp(26px, 4vw, 38px); margin-top: 8px; max-width: 24ch; }
+.lead { margin-top: 14px; max-width: 64ch; color: var(--ink2); font-size: 17px; }
+.ph { outline: 2px dashed var(--a-t); outline-offset: 2px; padding: 0 4px; border-radius: 2px; }
+
+/* hero */
+.hero { padding-block: 60px 44px; }
+.hero h1 { font-size: clamp(34px, 6.4vw, 64px); font-weight: 700; margin-top: 14px; max-width: 17ch; }
+.hero .sub { margin-top: 22px; font-size: clamp(17px, 2.2vw, 20px); max-width: 60ch; color: var(--ink2); }
+.hero .by { margin-top: 24px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+
+/* architecture diagram */
+.archwrap { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 32px 48px; align-items: start; }
+@media (max-width: 860px) { .archwrap { grid-template-columns: minmax(0, 1fr); } .diagram { max-width: 460px; } }
+.dg { width: 100%; height: auto; display: block; }
+.dg .box { fill: var(--paper); stroke: var(--line); stroke-width: 1.2; }
+.dg .fac { fill: var(--i-b); stroke: var(--i-t); stroke-width: 1.4; }
+.dg .cor { fill: var(--act-tint); stroke: var(--act); stroke-width: 1.8; }
+.dg .can { fill: var(--t-b); stroke: var(--t-t); stroke-width: 1.4; }
+.dg .deg { fill: var(--g-b); stroke: var(--line); stroke-width: 1.2; }
+.dg .ti { font: 600 16px var(--font-display); fill: var(--ink); }
+.dg .ti.f { fill: var(--i-t); } .dg .ti.c { fill: var(--act); } .dg .ti.k { fill: var(--t-t); }
+.dg .su { font: 400 12px var(--font-body); fill: var(--muted); }
+.dg .chip { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+.dg .ct { font: 500 11px var(--font-mono); fill: var(--ink2); }
+.dg .ar { stroke: var(--act); stroke-width: 1.7; fill: none; }
+.dg .cn { stroke: var(--t-t); stroke-width: 1.5; stroke-dasharray: 3 3; fill: none; }
+.read { list-style: none; display: grid; gap: 0; }
+.read li { padding-block: 16px; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+.read li:first-child { border-top: 0; padding-top: 0; }
+.read b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.read span { color: var(--ink2); font-size: 15px; }
+
+.hit { cursor: pointer; outline: none; }
+.hit:hover > rect:first-of-type, .hit:focus-visible > rect:first-of-type { stroke-width: 2.4; }
+.hit:focus-visible > rect:first-of-type { stroke: var(--ink); }
+.hit.on > rect:first-of-type { stroke: var(--ink); stroke-width: 2.8; }
+.panels { display: grid; gap: 14px; align-content: start; }
+.hint { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.tour { display: flex; align-items: center; gap: 12px; }
+.tour button { font: 600 14px var(--font-body); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; }
+.tour button.p { background: var(--act); border-color: var(--act); color: var(--on-act); }
+.tour button:focus-visible { outline: 3px solid var(--act); outline-offset: 2px; }
+.tour .mono { font-size: 12px; color: var(--muted); }
+.pn { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 10px; }
+.pn h3 { font-size: 22px; }
+.pn p { color: var(--ink2); font-size: 15.5px; }
+.pn dl { display: grid; gap: 2px; margin: 4px 0 0; }
+.pn dt { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.pn dd { margin: 0; color: var(--ink2); font-size: 15px; }
+.pn dd:last-of-type { color: var(--a-t); }
+.pn a { font-weight: 600; font-size: 14.5px; }
+[hidden] { display: none !important; }
+
+/* manifest */
+.man { margin-top: 28px; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+.man li { padding-block: 16px; border-top: 1px solid var(--line); }
+.man b { font-family: var(--font-display); font-size: 18px; font-weight: 600; display: block; }
+.man span { color: var(--ink2); font-size: 15px; }
+@media (max-width: 760px) { .man { grid-template-columns: minmax(0, 1fr); } }
+
+/* transfer table */
+.tbl { margin-top: 26px; overflow-x: auto; }
+.tbl table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14.5px; }
+.tbl th { text-align: left; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 10px 14px 10px 0; border-bottom: 2px solid var(--ink); font-weight: 500; }
+.tbl td { vertical-align: top; padding: 14px 14px 14px 0; border-bottom: 1px solid var(--line); color: var(--ink2); }
+.tbl td:first-child { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--ink); width: 17%; }
+.tbl td:last-child { color: var(--a-t); }
+
+/* field notes */
+.notes { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.note { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.note h3 { font-size: 18px; }
+.note p { font-size: 14.5px; color: var(--ink2); }
+.note .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--t-t); }
+
+/* control room */
+.case h3.sub3 { font-size: 19px; margin-top: 32px; }
+.case p.body, .case ul.pts { max-width: 66ch; }
+.case p.body { margin-top: 10px; color: var(--ink2); }
+.pts { list-style: none; display: grid; gap: 12px; margin-top: 10px; }
+.pts li { padding-left: 18px; position: relative; color: var(--ink2); }
+.pts li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 2px; background: var(--act); }
+.pts strong { color: var(--ink); font-weight: 600; }
+.flow { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr); gap: 8px; }
+.node { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 14px; font-size: 14px; min-width: 0; }
+.node b { display: block; font-family: var(--font-display); font-size: 16px; margin-bottom: 2px; }
+.node span { color: var(--muted); }
+.node.door { background: var(--act-tint); border-color: var(--act); }
+.arrow { align-self: center; text-align: center; color: var(--act); font-family: var(--font-mono); }
+@media (max-width: 760px) { .flow { grid-template-columns: minmax(0, 1fr); } .arrow { transform: rotate(90deg); } }
+.flowcap { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.screens { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+.screencol { width: 292px; max-width: 100%; }
+.phone { border: 1px solid var(--line); border-radius: 30px; padding: 10px; background: var(--paper); }
+.screen { border-radius: 22px; border: 1px solid var(--line); background: var(--bg); padding: 16px 14px 18px; display: grid; gap: 10px; min-height: 400px; align-content: start; }
+.screen h4 { font-size: 22px; display: flex; align-items: baseline; justify-content: space-between; }
+.screen h4 small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-weight: 500; }
+.dc { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; font-size: 13.5px; line-height: 1.45; }
+.dc p { color: var(--muted); }
+.tagc { justify-self: start; font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border-radius: 99px; }
+.tagc.g { background: var(--t-b); color: var(--t-t); }
+.tagc.y { background: var(--a-b); color: var(--a-t); }
+.btns { display: flex; gap: 8px; }
+.btn { font: 600 13px var(--font-body); padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); color: var(--ink); }
+.btn.p { background: var(--act); border-color: var(--act); color: var(--on-act); }
+.mi { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.mid { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.pill { font-family: var(--font-mono); font-size: 11px; white-space: nowrap; }
+.pill.run { color: var(--a-t); } .pill.done { color: var(--t-t); } .pill.rev { color: var(--i-t); }
+.demo { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; }
+
+/* limits */
+.limits { margin-top: 22px; background: var(--a-b); border: 1px solid var(--a-t); border-radius: 8px; padding: 22px; max-width: 760px; }
+.limits h3 { font-size: 19px; color: var(--a-t); }
+.limits ul { list-style: none; display: grid; gap: 8px; margin-top: 12px; color: var(--ink2); font-size: 15px; }
+.limits li { padding-left: 16px; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 7px; height: 2px; background: var(--a-t); }
+
+/* essays and code */
+.ess { list-style: none; counter-reset: e -1; margin-top: 24px; }
+.ess li { counter-increment: e; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 8px; padding-block: 12px; border-top: 1px solid var(--line); }
+.ess li::before { content: counter(e, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding-top: 4px; }
+.ess a { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--ink); text-decoration: none; }
+.ess a:hover { color: var(--act); text-decoration: underline; }
+.ess p { color: var(--muted); font-size: 14.5px; }
+.srv { list-style: none; margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+@media (max-width: 760px) { .srv { grid-template-columns: minmax(0, 1fr); } }
+.srv li { border-top: 1px solid var(--line); padding-top: 12px; }
+.srv code { font-family: var(--font-mono); font-size: 13px; color: var(--act); }
+.srv p { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+.small { margin-top: 22px; color: var(--muted); font-size: 14.5px; max-width: 64ch; }
+footer { padding-block: 36px 52px; display: grid; gap: 10px; color: var(--muted); font-size: 14px; }
+footer .links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(--font-mono); font-size: 13px; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="#top" aria-label="Sinapsi, home">
+      <svg viewBox="0 0 34 22" aria-hidden="true"><circle cx="5" cy="11" r="4" fill="var(--act)"/><circle cx="29" cy="11" r="4" fill="var(--t-t)"/><path d="M9 11c5 0 4-6 8-6s3 12 8 12" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Sinapsi
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#architecture">Architecture</a>
+      <a href="#enterprise">At scale</a>
+      <a href="#field-notes">Field notes</a>
+      <a href="#control-room">Control room</a>
+      <a href="#essays">Essays</a>
+      <a href="#code">Code</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow">A case study in platform engineering for AI agents</div>
+      <h1>Run AI agents like a platform, not like a chat.</h1>
+      <p class="sub">Sinapsi is how I manage AI agents the way an organisation manages infrastructure: one door, one source of truth, and rules that say honestly how they are enforced. I built it, and I run it, on my own servers. This page explains why the same shape can work in an enterprise.</p>
+      <p class="by">By Stefano Ursino &middot; personal research, no employer or client material</p>
+    </section>
+
+    <section class="sec" id="architecture">
+      <div class="eyebrow">The architecture</div>
+      <h2>Seven parts, one drawing</h2>
+      <p class="lead">Every agent action crosses the same corridor. The Canon governs everything. The Factory knows how to operate the platform and how to build on it.</p>
+
+      <div class="archwrap" id="archwrap">
+        <div class="diagram"><svg class="dg" viewBox="0 0 400 504" role="group" aria-label="Architecture diagram. Select a layer to read about it."><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--act)"/></marker><marker id="ac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--t-t)"/></marker></defs><g class="hit" data-k="interfaces" role="button" tabindex="0" aria-pressed="false" aria-label="Interfaces"><rect class="box" x="4" y="8" width="336" height="52" rx="8"/><text class="ti " x="16" y="31">Interfaces</text><text class="su" x="16" y="50">Phone cockpit, Claude apps, chat lanes</text></g><path class="ar" d="M86 60 L86 87" marker-end="url(#ah)"/><path class="ar" d="M258 60 L258 87" marker-end="url(#ah)"/><g class="hit" data-k="factory" role="button" tabindex="0" aria-pressed="false" aria-label="Sinapsi Factory"><rect class="fac" x="4" y="92" width="164" height="60" rx="8"/><text class="ti f" x="16" y="115">Sinapsi Factory</text><text class="su" x="16" y="134">Operates and builds</text></g><g class="hit" data-k="applications" role="button" tabindex="0" aria-pressed="false" aria-label="Applications"><rect class="box" x="176" y="92" width="164" height="60" rx="8"/><text class="ti " x="188" y="115">Applications</text><text class="su" x="188" y="134">Services for people</text></g><path class="ar" d="M86 152 L86 179" marker-end="url(#ah)"/><path class="ar" d="M258 152 L258 179" marker-end="url(#ah)"/><g class="hit" data-k="corridor" role="button" tabindex="0" aria-pressed="false" aria-label="The corridor"><rect class="cor" x="4" y="184" width="336" height="70" rx="8"/><text class="ti c" x="16" y="207">The corridor</text><text class="su" x="16" y="226">Identity, effect, approval</text><text class="su" x="16" y="242">One gateway, every call audited</text></g><path class="ar" d="M172 254 L172 283" marker-end="url(#ah)"/><text class="su" x="184" y="276">tool calls only</text><g class="hit" data-k="platform" role="button" tabindex="0" aria-pressed="false" aria-label="Platform services"><rect class="box" x="4" y="288" width="336" height="124" rx="8"/><text class="ti" x="16" y="311">Platform services</text><rect class="chip" x="16" y="320" width="74" height="22" rx="11"/><text class="ct" x="53.0" y="335" text-anchor="middle">Git forge</text><rect class="chip" x="96" y="320" width="68" height="22" rx="11"/><text class="ct" x="130.0" y="335" text-anchor="middle">Identity</text><rect class="chip" x="170" y="320" width="74" height="22" rx="11"/><text class="ct" x="207.0" y="335" text-anchor="middle">Event bus</text><rect class="chip" x="250" y="320" width="62" height="22" rx="11"/><text class="ct" x="281.0" y="335" text-anchor="middle">Secrets</text><rect class="chip" x="16" y="348" width="94" height="22" rx="11"/><text class="ct" x="63.0" y="363" text-anchor="middle">Certificates</text><rect class="chip" x="116" y="348" width="62" height="22" rx="11"/><text class="ct" x="147.0" y="363" text-anchor="middle">Deploys</text><rect class="chip" x="184" y="348" width="48" height="22" rx="11"/><text class="ct" x="208.0" y="363" text-anchor="middle">Audit</text><rect class="chip" x="238" y="348" width="81" height="22" rx="11"/><text class="ct" x="278.5" y="363" text-anchor="middle">Monitoring</text><rect class="chip" x="16" y="376" width="94" height="22" rx="11"/><text class="ct" x="63.0" y="391" text-anchor="middle">Tool servers</text></g><path class="ar" d="M172 412 L172 437" marker-end="url(#ah)"/><g class="hit" data-k="sites" role="button" tabindex="0" aria-pressed="false" aria-label="Sites and degraded mode"><rect class="deg" x="4" y="442" width="336" height="54" rx="8"/><text class="ti " x="16" y="465">Sites and degraded mode</text><text class="su" x="16" y="484">Two sites, same playbooks, a repair path</text></g><g class="hit" data-k="canon" role="button" tabindex="0" aria-pressed="false" aria-label="The Canon, governance as code"><rect class="can" x="352" y="8" width="44" height="488" rx="8"/><g transform="translate(374.0 252.0) rotate(-90)"><text class="ti k" x="0" y="-2" text-anchor="middle">The Canon</text><text class="su" x="0" y="14" text-anchor="middle">Governance as code</text></g></g><path class="cn" d="M352 34.0 L346 34.0" marker-end="url(#ac)"/><path class="cn" d="M352 122.0 L346 122.0" marker-end="url(#ac)"/><path class="cn" d="M352 219.0 L346 219.0" marker-end="url(#ac)"/><path class="cn" d="M352 350.0 L346 350.0" marker-end="url(#ac)"/><path class="cn" d="M352 469.0 L346 469.0" marker-end="url(#ac)"/></svg></div>
+        <div class="panels" id="panels"><p class="hint" id="hint" hidden>Select a layer, or walk through them in order.</p><div class="tour" hidden><button type="button" id="tprev">Back</button><span id="tstep" class="mono" aria-live="polite"></span><button type="button" id="tnext" class="p">Next</button></div><section class="pn" data-for="interfaces"><h3>Interfaces</h3><p>Claude apps, Claude Code, chat lanes and a phone cockpit. A new interface is a new party, so it has to be granted access before it can act.</p><dl><dt>In an enterprise</dt><dd>Approved clients, onboarded through an access decision rather than a configuration change.</dd><dt>Still to prove</dt><dd>How many client types an organisation can allow before the access model gets muddy.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Essay: Missions, Not Chats</a></section><section class="pn" data-for="factory"><h3>Sinapsi Factory</h3><p>The part that knows the platform's rules and procedures. It splits work into missions, starts specialised sessions and checks what comes back. The session that builds a change never merges it.</p><dl><dt>In an enterprise</dt><dd>The internal agent platform team, with change management for work done by agents.</dd><dt>Still to prove</dt><dd>Reviewer capacity, and what independent review costs per change.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Essay: Missions, Not Chats</a></section><section class="pn" data-for="applications"><h3>Applications</h3><p>Services built for people on top of the platform. Agents reach them only through tools, and an application may not bypass a platform service.</p><dl><dt>In an enterprise</dt><dd>Product teams' services that consume platform building blocks.</dd><dt>Still to prove</dt><dd>How much it costs a team to onboard an application to the corridor.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/10-the-tool-plane.md">Essay: The Tool Plane</a></section><section class="pn" data-for="corridor"><h3>The corridor</h3><p>One gateway for every call. It checks who is calling, classifies the call as read, write or secret, and writes the decision to an audit stream before anything reaches a system. There are no side doors.</p><dl><dt>In an enterprise</dt><dd>A central policy enforcement point, so teams add tools without adding credentials.</dd><dt>Still to prove</dt><dd>Throughput, tenant isolation, and who owns the policy.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/03-the-trust-plane.md">Essay: The Trust Plane</a></section><section class="pn" data-for="platform"><h3>Platform services</h3><p>The building blocks that make the platform work: git forge, identity, event bus, secrets and certificates, deploys, audit, monitoring and the tool servers. Every state-changing action emits an event.</p><dl><dt>In an enterprise</dt><dd>The platform engineering foundations an organisation already runs.</dd><dt>Still to prove</dt><dd>Operating cost, and keeping the audit trail complete across many teams.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/11-identity-and-secrets.md">Essay: Identity and Secrets Without a Human in the Loop</a></section><section class="pn" data-for="sites"><h3>Sites and degraded mode</h3><p>Two sites run the same playbooks, and a repair path exists for the day the platform itself is down.</p><dl><dt>In an enterprise</dt><dd>Multi-region operation, break-glass access and recovery for the agent plane.</dd><dt>Still to prove</dt><dd>Failover drills at real scale.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/08-the-self-coded-stack.md">Essay: One Stack, Reproduced</a></section><section class="pn" data-for="canon"><h3>The Canon</h3><p>Governance as code: a map of what exists, the rules that regulate it and the sanctioned procedures, kept as typed records in git and shown as a graph. Every rule says whether it is mechanised, reviewed or on the honour system.</p><dl><dt>In an enterprise</dt><dd>A control library that reports real enforcement status, like control effectiveness in an audit.</dd><dt>Still to prove</dt><dd>Label drift across hundreds of rules.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/01-documentation-that-cannot-lie.md">Essay: Documentation That Cannot Lie</a></section></div>
+      </div>
+    </section>
+
+    <section class="sec" id="manifest">
+      <div class="eyebrow">The manifest</div>
+      <h2>Six commitments the platform is built on</h2>
+      <ul class="man">
+        <li><b>A bounded door, never raw access.</b><span>An agent gets a small, audited surface to a system, not its credentials.</span></li>
+        <li><b>One source, two consumers.</b><span>People and agents read the same service, and a check proves they get the same answer.</span></li>
+        <li><b>Control from reversibility, review and scope.</b><span>Gating every command does not scale. Making work easy to undo, reviewed and narrow does.</span></li>
+        <li><b>Say how each rule is enforced.</b><span>A rule labelled as enforced when it is not does more harm than no rule.</span></li>
+        <li><b>Authority is earned.</b><span>Autonomy is granted per class of change, decays if unproven and can be revoked in one move.</span></li>
+        <li><b>Work is a mission, not a chat.</b><span>Bounded scope, an owner, a full context bundle and an independent check on the way back.</span></li>
+      </ul>
+    </section>
+
+    <section class="sec" id="enterprise">
+      <div class="eyebrow">From a home server to an enterprise</div>
+      <h2>Why the same shape should scale</h2>
+      <p class="lead">Each pattern below runs today across two sites of my own infrastructure. The right-hand column says what I have not proven yet, because that is where the real work for an organisation sits.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Pattern</th><th>In my lab</th><th>In an enterprise</th><th>Still to prove</th></tr></thead>
+          <tbody>
+            <tr><td>One bounded door</td><td>All agent actions cross one gateway. Tools are scoped to an identity and every decision is audited.</td><td>A central policy enforcement point, so teams add tools without adding credentials.</td><td>Throughput, tenant isolation and who owns the policy.</td></tr>
+            <tr><td>One source, two consumers</td><td>The cockpit and the agents read one relationship service. A same-answer check compares both.</td><td>A service catalog and system map that people and agents query the same way.</td><td>Keeping it fresh across many teams' data.</td></tr>
+            <tr><td>Governance as code, honestly labelled</td><td>Rules are typed records in git. Each says mechanised, reviewed or honour system.</td><td>A control library that reports real enforcement, like control-effectiveness in an audit.</td><td>Label drift across hundreds of rules.</td></tr>
+            <tr><td>Graduated autonomy</td><td>Actions are sorted by blast radius: green proceeds, yellow asks, red is never autonomous. Authorization layers run in shadow before they enforce.</td><td>Risk-tiered approval for agent actions, tuned with evidence.</td><td>Thresholds against real incident cost.</td></tr>
+            <tr><td>Missions with separation of duties</td><td>The session that builds a change never merges it. An independent review comes first.</td><td>Change management for work done by agents.</td><td>Reviewer capacity and its cost.</td></tr>
+            <tr><td>Degraded mode</td><td>Two sites, the same playbooks and a documented repair path.</td><td>Break-glass access and recovery for the agent plane itself.</td><td>Failover drills at real scale.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="limits">
+        <h3>What this does not show</h3>
+        <ul>
+          <li>It is one operator on a home-scale lab across two sites. There is no multi-tenant load, no cost model and no organisational change to manage.</li>
+          <li>Some authorization layers still run in shadow mode on purpose. I observe before I enforce.</li>
+          <li>The claim is the shape of the platform and the discipline around it. It is not a claim of enterprise readiness.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec" id="field-notes">
+      <div class="eyebrow">Field notes</div>
+      <h2>What running it taught me</h2>
+      <div class="notes">
+        <article class="note">
+          <span class="tag">Measure the default</span>
+          <h3>A fleet default can be set upstream</h3>
+          <p>Running Claude Code across many hosts, I found that the starting permission mode of sessions started from the app was assigned by the service, not by host configuration. I tried the launch flag, user settings and the managed settings tier. None changed it, and public bug reports described the same behaviour. I kept the control in the gateway and the always-on hooks, where I own it. It later changed upstream with no change on my side.</p>
+        </article>
+        <article class="note">
+          <span class="tag">Delete with evidence</span>
+          <h3>Rarely used is not dead</h3>
+          <p>An audit of my own repository refuted about two thirds of the "this is dead" claims. A yearly certificate rotation and a recovery path are both rare and both load-bearing. Deletion now needs positive evidence, and disabling comes first.</p>
+        </article>
+        <article class="note">
+          <span class="tag">Prove the claim</span>
+          <h3>A green pipeline proves a job exited zero</h3>
+          <p>Success is verified on the host or on the event bus. A same-answer check does this for the control room, and the decision trail does it for every authorization.</p>
+        </article>
+        <article class="note">
+          <span class="tag">Register what runs</span>
+          <h3>A register proves shape, not completeness</h3>
+          <p>A census of the fleet found third-party software that nobody was updating. A check can show that the register is well formed. It cannot show that it is complete, so the platform reports the gap the morning after.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec case" id="control-room">
+      <div class="eyebrow">Case study</div>
+      <h2>The control room</h2>
+      <p class="lead">The human face of the platform: one cockpit for the person, one door for the agents, and one source of truth behind both.</p>
+
+      <h3 class="sub3">The problem</h3>
+      <p class="body">A fleet of agents is only useful if I can see what it is doing and answer yes or no from wherever I am. Chat threads do not give me that. Decisions get lost, and each tool describes the lab a little differently.</p>
+
+      <h3 class="sub3">What I built</h3>
+      <ul class="pts">
+        <li><strong>A decision inbox called Now.</strong> Anything an agent cannot decide alone lands as a card with the evidence and two buttons. The answer is recorded once and applied once.</li>
+        <li><strong>A mission ledger.</strong> Work is split into bounded missions, each with an owner, a status and a link to the change that did it. I approve goals. An orchestrator session starts the work and checks what comes back.</li>
+        <li><strong>A relationship map.</strong> One read-only service knows how the parts of the platform connect. The cockpit and the agents read it through the same door.</li>
+      </ul>
+
+      <div class="flow" role="img" aria-label="Diagram: a person on a phone and agents both reach one door, which reads one source of truth.">
+        <div class="node"><b>Me, on a phone</b><span>Decision inbox, missions, map</span></div>
+        <div class="arrow" aria-hidden="true">&rarr;</div>
+        <div class="node door"><b>One door</b><span>Identity, policy and an audit trail on every call</span></div>
+        <div class="arrow" aria-hidden="true">&rarr;</div>
+        <div class="node"><b>One source of truth</b><span>The map and the mission record, read only</span></div>
+      </div>
+      <p class="flowcap">Agents enter through the same door. Same question, same answer.</p>
+
+      <div class="screens">
+        <div class="screencol">
+          <div class="phone"><div class="screen">
+            <h4>Now <small>2 waiting</small></h4>
+            <div class="dc">
+              <span class="tagc y">Yellow</span>
+              <strong>Approve rule set v3 for the staging door?</strong>
+              <p>Reviewed by an independent session. Changes who may call two tools.</p>
+              <div class="btns"><span class="btn p">Approve</span><span class="btn">Not yet</span></div>
+            </div>
+            <div class="dc">
+              <span class="tagc g">Green</span>
+              <strong>Restart the stateless indexer job</strong>
+              <p>Proceeded on its own and was logged. Done 2 min ago.</p>
+            </div>
+          </div></div>
+          <p class="demo">Demo data, invented for this page</p>
+        </div>
+        <div class="screencol">
+          <div class="phone"><div class="screen">
+            <h4>Work <small>3 missions</small></h4>
+            <div class="dc"><div class="mi"><span>Draft access policy</span><span class="pill rev">In review</span></div><span class="mid">M-101 &middot; policy persona</span></div>
+            <div class="dc"><div class="mi"><span>Rotate the demo certificate</span><span class="pill done">Done</span></div><span class="mid">M-102 &middot; ops persona</span></div>
+            <div class="dc"><div class="mi"><span>Index the new essay</span><span class="pill run">Running</span></div><span class="mid">M-103 &middot; docs persona</span></div>
+          </div></div>
+          <p class="demo">Demo data, invented for this page</p>
+        </div>
+      </div>
+
+      <h3 class="sub3">How it was built</h3>
+      <ul class="pts">
+        <li><strong>Journey first.</strong> I modelled who uses it and which decision they face before drawing any screen.</li>
+        <li><strong>Phone first.</strong> A screen counts as done only after I have looked at a real rendering on a phone.</li>
+        <li><strong>Separation of duties.</strong> The session that builds a change does not merge it.</li>
+        <li><strong>Proof over claims.</strong> A same-answer check compares what the cockpit shows with what an agent receives and reports whether they match.</li>
+        <li><strong>Always current.</strong> The map follows a merge by itself, in under a minute and without a restart.</li>
+      </ul>
+    </section>
+
+    <section class="sec" id="essays">
+      <div class="eyebrow">Essays</div>
+      <h2>The thinking behind it</h2>
+      <p class="lead">Fourteen first-person essays on building and operating software with AI agents. They hold the reasoning, not the tooling. Every example is invented and no real system details appear. A fifteenth, on honest enforcement labels, is in draft.</p>
+      <ol class="ess">
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/00-agentic-delivery-manifesto.md">The manifesto</a><p>Control comes from reversibility, review and scope, not from gating every command.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/01-documentation-that-cannot-lie.md">Documentation That Cannot Lie</a><p>Make the running system the source of truth and flag any claim that no evidence backs.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/02-grounding-the-agent.md">Grounding the Agent</a><p>Memory inside a session is a cache with no invalidation. Ground every session in a live source.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/03-the-trust-plane.md">The Trust Plane</a><p>Never hand an agent raw credentials. Route every action through a policy-enforcing, audited plane.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/04-proving-equivalence.md">Proving You Didn't Break It</a><p>For migrations, run old and new side by side on real input and diff the behaviour.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/05-journey-first-design.md">Journey-First Design</a><p>Model the user, the job and the decision points before any pixel.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/06-deterministic-ui.md">Deterministic UI</a><p>Every surface traces to an authored spec and a shared design canon.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/07-the-council.md">The Council</a><p>One model is a single point of failure for judgement. Consult several and weigh, do not vote.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/08-the-self-coded-stack.md">One Stack, Reproduced</a><p>One canonical stack, with conventions shared as versioned packages.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Missions, Not Chats</a><p>Structure work as governed missions with a complete context bundle.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/10-the-tool-plane.md">The Tool Plane</a><p>An agent is only as safe as its tools, so treat the tool surface as infrastructure.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/11-identity-and-secrets.md">Identity and Secrets Without a Human in the Loop</a><p>Scoped identity per actor and secrets delivered at runtime, never pasted.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/12-the-decision-trail.md">The Decision Trail</a><p>Emit every decision as a typed, correlated event so "why was this allowed?" is one query.</p></div></li>
+        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/13-continuous-trust.md">Continuous Trust</a><p>Authority to proceed alone is earned, decays if unproven and can be revoked in one move.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="sec" id="code">
+      <div class="eyebrow">Code</div>
+      <h2>The doors, as running code</h2>
+      <ul class="srv">
+        <li><code>Sshgw.Mcp</code><p>An agent's SSH access as a bounded door: a per-server command whitelist, each command classified by effect, every decision sent to an audit stream.</p></li>
+        <li><code>Sinapsi.SentinelConsole</code><p>One live screen of the authorization decisions across the layers.</p></li>
+        <li><code>StepCa.Mcp</code><p>Issue and inspect certificates from an internal CA through a six-tool surface.</p></li>
+        <li><code>Zitadel.Mcp</code><p>Machine users, OIDC apps and grants on an identity server, with the bearer held server-side.</p></li>
+        <li><code>Infisical.Mcp</code><p>Runtime secret delivery behind four tools, so no one pastes a credential.</p></li>
+        <li><code>Sinapsi.Indexer</code><p>Searchable memory over source-of-truth git repos, kept fresh by push events.</p></li>
+      </ul>
+      <p class="small">Thirteen MCP servers and four shared libraries in total, written for .NET 8. It is a curated, read-only snapshot of exploratory code, and it changes when I learn something. <a href="https://github.com/insalata-fresca/sinapsi-mcp">Browse it on GitHub</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="links">
+      <a href="https://github.com/insalata-fresca">GitHub</a>
+      <a href="https://github.com/insalata-fresca/sinapsi-mcp">Code</a>
+      <a href="https://github.com/insalata-fresca/sinapsi-design">Essays</a>
+      <a id="mail" href="https://github.com/insalata-fresca" data-u="insalata.fresca" data-d="gmail.com">Contact</a>
+    </div>
+    <p>Personal research. It contains no employer or client material and no operational details of any real system. Essays are licensed CC BY 4.0.</p>
+  </footer>
+</div>
+<script>
+(function () {
+  var w = document.getElementById('archwrap'); if (!w) return;
+  var order = ['interfaces','factory','applications','corridor','platform','sites','canon'];
+  var names = {interfaces:'Interfaces',factory:'Sinapsi Factory',applications:'Applications',corridor:'The corridor',platform:'Platform services',sites:'Sites and degraded mode',canon:'The Canon'};
+  var hits = w.querySelectorAll('.hit'), pns = w.querySelectorAll('.pn');
+  var tour = w.querySelector('.tour'), hint = document.getElementById('hint');
+  var step = document.getElementById('tstep'), prev = document.getElementById('tprev'), next = document.getElementById('tnext');
+  var cur = 'corridor', started = false;
+  tour.hidden = false; hint.hidden = false;
+  function show(k, scroll) {
+    cur = k;
+    hits.forEach(function (h) { var on = h.getAttribute('data-k') === k; h.classList.toggle('on', on); h.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    pns.forEach(function (p) { p.hidden = p.getAttribute('data-for') !== k; });
+    var i = order.indexOf(k);
+    step.textContent = (i + 1) + ' of ' + order.length;
+    prev.disabled = i === 0; next.disabled = i === order.length - 1;
+    prev.style.opacity = prev.disabled ? '.45' : '1'; next.style.opacity = next.disabled ? '.45' : '1';
+    next.textContent = i < order.length - 1 ? 'Next: ' + names[order[i + 1]] : 'End of tour';
+    if (scroll) {
+      var p = w.querySelector('.pn:not([hidden])'), r = p.getBoundingClientRect();
+      if (r.top > window.innerHeight * 0.75 || r.bottom < 0) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        p.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+      }
+    }
+  }
+  hits.forEach(function (h) {
+    h.addEventListener('click', function () { show(h.getAttribute('data-k'), true); });
+    h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(h.getAttribute('data-k'), true); } });
+  });
+  prev.addEventListener('click', function () { var i = order.indexOf(cur); if (i > 0) show(order[i - 1], false); });
+  next.addEventListener('click', function () { var i = order.indexOf(cur); if (i < order.length - 1) show(order[i + 1], false); });
+  show(cur, false);
+})();
+</script>
+<script>
+(function () {
+  var a = document.getElementById('mail'); if (!a) return;
+  var m = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+  a.setAttribute('href', 'mailto:' + m); a.textContent = m;
+})();
+</script>
+</body>
+</html>
