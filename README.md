@@ -1,8 +1,11 @@
 # sinapsi-site
 
-Source of the site at https://sinapsi.insalata-fresca.ch/. A single static page, no build step.
+Source of the site at https://sinapsi.insalata-fresca.ch/. Static pages, no build step.
 
-Sinapsi is a personal engineering lab for agentic software delivery. The page is a case study of a platform approach to running AI agents, with the architecture, the control room, the essays and the code.
+Sinapsi is a personal engineering lab for agentic software delivery. The site is a case study of a platform approach to running AI agents:
+
+- `index.html`: the overview, with the four-block architecture (the Sinapsi Dev Factory, the platform of services, applications and governance as code).
+- `factory.html`, `governance.html`, `corridor.html`, `data-platform.html`, `control-room.html`: one deep dive each, built around a larger diagram and ending at the essay that argues it.
 
 Related repositories:
 

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sinapsi Platform by Stefano Ursino</title>
-<meta name="description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: one door, one source of truth and honestly labelled rules, run on my own infrastructure.">
+<meta name="description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: a development factory of agents, a platform of services and governance as code.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sinapsi.insalata-fresca.ch/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sinapsi Platform by Stefano Ursino">
-<meta property="og:description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: one door, one source of truth and honestly labelled rules, run on my own infrastructure.">
+<meta property="og:description" content="Sinapsi is a case study in platform engineering for AI agents by Stefano Ursino: a development factory of agents, a platform of services and governance as code.">
 <meta property="og:url" content="https://sinapsi.insalata-fresca.ch/">
 <meta name="color-scheme" content="light dark">
 <script type="application/ld+json">
@@ -21,13 +21,11 @@
   "sameAs": [
     "https://github.com/insalata-fresca"
   ],
-  "description": "Personal engineering lab for agentic software delivery: a platform approach to running AI agents."
+  "description": "Platform engineering for AI agents: the Sinapsi Dev Factory, the platform of services and governance as code."
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
-<style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>body{margin:0}
 /* Layout concept: the Sinapsi control-center palette (cool grey paper, blue-grey ink, one action blue,
    teal / indigo / amber for meaning). The page opens on the architecture drawing, then explains why it transfers. */
 :root {
@@ -45,6 +43,7 @@
   --a-t: #7A4A00; --a-b: #FDF1DC;
   --r-t: #A1221B; --r-b: #FBECEB;
   --g-t: #4F5F66; --g-b: #EEF1F2;
+  --d-t: #A3255F; --d-b: #FBE9F1;
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -54,7 +53,7 @@
     --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
     --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
     --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
-    --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C;
+    --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C; --d-t: #F28DB9; --d-b: #33141F;
     color-scheme: dark;
   }
 }
@@ -62,7 +61,7 @@
   --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
   --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
   --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
-  --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C;
+  --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C; --d-t: #F28DB9; --d-b: #33141F;
   color-scheme: dark;
 }
 
@@ -129,9 +128,44 @@ ul, ol { margin: 0; padding: 0; }
 .read span { color: var(--ink2); font-size: 15px; }
 
 .hit { cursor: pointer; outline: none; }
-.hit:hover > rect:first-of-type, .hit:focus-visible > rect:first-of-type { stroke-width: 2.4; }
-.hit:focus-visible > rect:first-of-type { stroke: var(--ink); }
-.hit.on > rect:first-of-type { stroke: var(--ink); stroke-width: 2.8; }
+.hit:hover > .sh, .hit:focus-visible > .sh { stroke-width: 2.4; }
+.hit:focus-visible > .sh { stroke: var(--ink); }
+.hit.on > .sh { stroke: var(--ink); stroke-width: 2.8; }
+.dg .dat { fill: var(--d-b); stroke: var(--d-t); stroke-width: 1.6; }
+.dg .ti.d, .dg .ti2.d { fill: var(--d-t); }
+.dg .ti2 { font: 600 14.5px var(--font-display); fill: var(--ink); }
+.dg .ti2.c { fill: var(--act); }
+.dg .sl { font: 500 11px var(--font-mono); fill: var(--i-t); }
+.dg .lb { font: 500 10.5px var(--font-mono); fill: var(--muted); letter-spacing: 0.08em; }
+.dg .bt { font: 600 12.5px var(--font-display); fill: var(--ink); }
+.dg .af { stroke: var(--i-t); stroke-width: 1.7; fill: none; }
+.seams { margin-top: 26px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 860px) { .seams { grid-template-columns: minmax(0, 1fr); } }
+.seam { background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--i-t); border-radius: 8px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.seam.g { border-top-color: var(--t-t); } .seam.p { border-top-color: var(--act); } .seam.a { border-top-color: var(--i-t); }
+.seam h3 { font-size: 18px; } .seam p { font-size: 14.5px; color: var(--ink2); }
+.seam .tag, .bacol .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.sub3 { font-size: 19px; margin-top: 34px; }
+.body { margin-top: 10px; color: var(--ink2); max-width: 66ch; }
+.steps { list-style: none; counter-reset: s; margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; align-content: start; }
+.steps li::before { content: counter(s); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.steps b { font-family: var(--font-display); font-size: 16.5px; font-weight: 600; }
+.steps span { color: var(--ink2); font-size: 14.5px; }
+.ba { margin-top: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 820px; }
+@media (max-width: 640px) { .ba { grid-template-columns: minmax(0, 1fr); } }
+.bacol { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.bacol.on { background: var(--d-b); border-color: var(--d-t); }
+.bacol ul { list-style: none; display: grid; gap: 6px; font-size: 15px; }
+.bacol li { padding-left: 16px; position: relative; }
+.bacol li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 7px; height: 2px; background: var(--ink2); }
+.bacol p { font-size: 14px; color: var(--muted); }
+.ba + .pts { margin-top: 18px; max-width: 66ch; }
+.notes.three { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
+@media (max-width: 860px) { .notes.three { grid-template-columns: minmax(0, 1fr); } }
+.note .price { color: var(--a-t); }
 .panels { display: grid; gap: 14px; align-content: start; }
 .hint { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
 .tour { display: flex; align-items: center; gap: 12px; }
@@ -173,9 +207,7 @@ ul, ol { margin: 0; padding: 0; }
 .note .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--t-t); }
 
 /* control room */
-.case h3.sub3 { font-size: 19px; margin-top: 32px; }
-.case p.body, .case ul.pts { max-width: 66ch; }
-.case p.body { margin-top: 10px; color: var(--ink2); }
+.case ul.pts { max-width: 66ch; }
 .pts { list-style: none; display: grid; gap: 12px; margin-top: 10px; }
 .pts li { padding-left: 18px; position: relative; color: var(--ink2); }
 .pts li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 2px; background: var(--act); }
@@ -230,82 +262,92 @@ ul, ol { margin: 0; padding: 0; }
 .small { margin-top: 22px; color: var(--muted); font-size: 14.5px; max-width: 64ch; }
 footer { padding-block: 36px 52px; display: grid; gap: 10px; color: var(--muted); font-size: 14px; }
 footer .links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(--font-mono); font-size: 13px; }
-</style>
 
+/* v7 additions */
+.hero .sub { max-width: 54ch; }
+.nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+.pn dl { margin: 0; } .pn dt { margin-top: 0; }
+.pn a, .more { font-weight: 600; font-size: 14.5px; }
+.man.titles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+@media (max-width: 860px) { .man.titles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.man.titles li { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); padding: 12px 14px; font-family: var(--font-display); font-weight: 600; font-size: 15px; line-height: 1.25; }
+.dd { margin-top: 22px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 980px) { .dd { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .dd { grid-template-columns: minmax(0, 1fr); } }
+.dd a { display: grid; gap: 6px; align-content: start; background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--c, var(--act)); border-radius: 8px; padding: 14px; text-decoration: none; color: var(--ink); }
+.dd a:hover { border-color: var(--c, var(--act)); }
+.dd b { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+.dd span { color: var(--ink2); font-size: 14px; }
+.dd i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--act); }
+.pairs { margin-top: 22px; display: grid; gap: 8px; max-width: 820px; }
+.pair2 { display: grid; grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr); align-items: center; gap: 6px; }
+.pair2 span { border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 14px; line-height: 1.3; background: var(--paper); }
+.pair2 span:last-child { background: var(--act-tint); border-color: var(--act); }
+.pair2 em { font-style: normal; text-align: center; color: var(--act); font-family: var(--font-mono); }
+.pairhead { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pairhead span { border: 0; background: none; padding: 0 2px; } .pairhead span:last-child { background: none; }
+.chipsrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.chipsrow code, .chipsrow span { font-family: var(--font-mono); font-size: 12.5px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); color: var(--ink2); }
+.prove span { border-color: var(--a-t); color: var(--a-t); background: var(--a-b); }
+.prove { align-items: center; } .prove b { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-right: 4px; }
+.deephero { padding-block: 44px 8px; }
+.deephero h1 { font-size: clamp(30px, 5.4vw, 52px); margin-top: 10px; max-width: 20ch; }
+.deephero .sub { margin-top: 16px; font-size: 18px; color: var(--ink2); max-width: 56ch; }
+.crumb { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); text-decoration: none; }
+.deep .sec { padding-block: 36px; }
+.deep .archwrap { grid-template-columns: minmax(0, 520px) minmax(0, 1fr); }
+@media (max-width: 860px) { .deep .archwrap { grid-template-columns: minmax(0, 1fr); } .deep .diagram { max-width: 520px; } }
+.read span { font-size: 14.5px; }
+.duo { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; align-items: start; }
+@media (max-width: 860px) { .duo { grid-template-columns: minmax(0, 1fr); } .duo .diagram { max-width: 520px; } }
+.duo h3 { font-size: 19px; margin-bottom: 12px; }
+.last { margin-top: 18px; display: grid; gap: 10px; max-width: 640px; }
+.last a { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--ink); border-radius: 8px; padding: 14px 16px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.last a:hover { border-color: var(--act); } .last i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--act); white-space: nowrap; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; font-family: var(--font-mono); font-size: 13px; }
+.note p { font-size: 14px; }
+</style>
 </head>
 <body>
 <div class="wrap">
-  <header class="mast">
-    <a class="brand" href="#top" aria-label="Sinapsi, home">
-      <svg viewBox="0 0 34 22" aria-hidden="true"><circle cx="5" cy="11" r="4" fill="var(--act)"/><circle cx="29" cy="11" r="4" fill="var(--t-t)"/><path d="M9 11c5 0 4-6 8-6s3 12 8 12" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></svg>
-      Sinapsi
-    </a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#architecture">Architecture</a>
-      <a href="#enterprise">At scale</a>
-      <a href="#field-notes">Field notes</a>
-      <a href="#control-room">Control room</a>
-      <a href="#essays">Essays</a>
-      <a href="#code">Code</a>
-    </nav>
-  </header>
-
+  <header class="mast"><a class="brand" href="./" aria-label="Sinapsi, overview"><svg viewBox="0 0 34 22" aria-hidden="true"><circle cx="5" cy="11" r="4" fill="var(--act)"/><circle cx="29" cy="11" r="4" fill="var(--t-t)"/><path d="M9 11c5 0 4-6 8-6s3 12 8 12" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></svg>Sinapsi</a><nav class="nav" aria-label="Pages"><a href="./" aria-current="page">Overview</a><a href="factory.html">Factory</a><a href="governance.html">Governance</a><a href="corridor.html">Corridor</a><a href="data-platform.html">Data platform</a><a href="control-room.html">Control room</a></nav></header>
   <main id="top">
     <section class="hero">
       <div class="eyebrow">A case study in platform engineering for AI agents</div>
       <h1>Run AI agents like a platform, not like a chat.</h1>
-      <p class="sub">Sinapsi is how I manage AI agents the way an organisation manages infrastructure: one door, one source of truth, and rules that say honestly how they are enforced. I built it, and I run it, on my own servers. This page explains why the same shape can work in an enterprise.</p>
-      <p class="by">By Stefano Ursino &middot; personal research, no employer or client material</p>
+      <p class="sub">Sinapsi is a development factory of AI agents, the platform of services it runs on, and the rules that govern both. It runs on my own servers, and the same shape fits an enterprise.</p>
+      <p class="by">By Stefano Ursino &middot; personal research and architecture studies</p>
     </section>
 
     <section class="sec" id="architecture">
       <div class="eyebrow">The architecture</div>
-      <h2>Seven parts, one drawing</h2>
-      <p class="lead">Every agent action crosses the same corridor. The Canon governs everything. The Factory knows how to operate the platform and how to build on it.</p>
-
+      <h2>Four blocks, one drawing</h2>
+      <p class="lead">People build through the Factory and consume through applications. Governance as code rules all of it.</p>
       <div class="archwrap" id="archwrap">
-        <div class="diagram"><svg class="dg" viewBox="0 0 400 504" role="group" aria-label="Architecture diagram. Select a layer to read about it."><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--act)"/></marker><marker id="ac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--t-t)"/></marker></defs><g class="hit" data-k="interfaces" role="button" tabindex="0" aria-pressed="false" aria-label="Interfaces"><rect class="box" x="4" y="8" width="336" height="52" rx="8"/><text class="ti " x="16" y="31">Interfaces</text><text class="su" x="16" y="50">Phone cockpit, Claude apps, chat lanes</text></g><path class="ar" d="M86 60 L86 87" marker-end="url(#ah)"/><path class="ar" d="M258 60 L258 87" marker-end="url(#ah)"/><g class="hit" data-k="factory" role="button" tabindex="0" aria-pressed="false" aria-label="Sinapsi Factory"><rect class="fac" x="4" y="92" width="164" height="60" rx="8"/><text class="ti f" x="16" y="115">Sinapsi Factory</text><text class="su" x="16" y="134">Operates and builds</text></g><g class="hit" data-k="applications" role="button" tabindex="0" aria-pressed="false" aria-label="Applications"><rect class="box" x="176" y="92" width="164" height="60" rx="8"/><text class="ti " x="188" y="115">Applications</text><text class="su" x="188" y="134">Services for people</text></g><path class="ar" d="M86 152 L86 179" marker-end="url(#ah)"/><path class="ar" d="M258 152 L258 179" marker-end="url(#ah)"/><g class="hit" data-k="corridor" role="button" tabindex="0" aria-pressed="false" aria-label="The corridor"><rect class="cor" x="4" y="184" width="336" height="70" rx="8"/><text class="ti c" x="16" y="207">The corridor</text><text class="su" x="16" y="226">Identity, effect, approval</text><text class="su" x="16" y="242">One gateway, every call audited</text></g><path class="ar" d="M172 254 L172 283" marker-end="url(#ah)"/><text class="su" x="184" y="276">tool calls only</text><g class="hit" data-k="platform" role="button" tabindex="0" aria-pressed="false" aria-label="Platform services"><rect class="box" x="4" y="288" width="336" height="124" rx="8"/><text class="ti" x="16" y="311">Platform services</text><rect class="chip" x="16" y="320" width="74" height="22" rx="11"/><text class="ct" x="53.0" y="335" text-anchor="middle">Git forge</text><rect class="chip" x="96" y="320" width="68" height="22" rx="11"/><text class="ct" x="130.0" y="335" text-anchor="middle">Identity</text><rect class="chip" x="170" y="320" width="74" height="22" rx="11"/><text class="ct" x="207.0" y="335" text-anchor="middle">Event bus</text><rect class="chip" x="250" y="320" width="62" height="22" rx="11"/><text class="ct" x="281.0" y="335" text-anchor="middle">Secrets</text><rect class="chip" x="16" y="348" width="94" height="22" rx="11"/><text class="ct" x="63.0" y="363" text-anchor="middle">Certificates</text><rect class="chip" x="116" y="348" width="62" height="22" rx="11"/><text class="ct" x="147.0" y="363" text-anchor="middle">Deploys</text><rect class="chip" x="184" y="348" width="48" height="22" rx="11"/><text class="ct" x="208.0" y="363" text-anchor="middle">Audit</text><rect class="chip" x="238" y="348" width="81" height="22" rx="11"/><text class="ct" x="278.5" y="363" text-anchor="middle">Monitoring</text><rect class="chip" x="16" y="376" width="94" height="22" rx="11"/><text class="ct" x="63.0" y="391" text-anchor="middle">Tool servers</text></g><path class="ar" d="M172 412 L172 437" marker-end="url(#ah)"/><g class="hit" data-k="sites" role="button" tabindex="0" aria-pressed="false" aria-label="Sites and degraded mode"><rect class="deg" x="4" y="442" width="336" height="54" rx="8"/><text class="ti " x="16" y="465">Sites and degraded mode</text><text class="su" x="16" y="484">Two sites, same playbooks, a repair path</text></g><g class="hit" data-k="canon" role="button" tabindex="0" aria-pressed="false" aria-label="The Canon, governance as code"><rect class="can" x="352" y="8" width="44" height="488" rx="8"/><g transform="translate(374.0 252.0) rotate(-90)"><text class="ti k" x="0" y="-2" text-anchor="middle">The Canon</text><text class="su" x="0" y="14" text-anchor="middle">Governance as code</text></g></g><path class="cn" d="M352 34.0 L346 34.0" marker-end="url(#ac)"/><path class="cn" d="M352 122.0 L346 122.0" marker-end="url(#ac)"/><path class="cn" d="M352 219.0 L346 219.0" marker-end="url(#ac)"/><path class="cn" d="M352 350.0 L346 350.0" marker-end="url(#ac)"/><path class="cn" d="M352 469.0 L346 469.0" marker-end="url(#ac)"/></svg></div>
-        <div class="panels" id="panels"><p class="hint" id="hint" hidden>Select a layer, or walk through them in order.</p><div class="tour" hidden><button type="button" id="tprev">Back</button><span id="tstep" class="mono" aria-live="polite"></span><button type="button" id="tnext" class="p">Next</button></div><section class="pn" data-for="interfaces"><h3>Interfaces</h3><p>Claude apps, Claude Code, chat lanes and a phone cockpit. A new interface is a new party, so it has to be granted access before it can act.</p><dl><dt>In an enterprise</dt><dd>Approved clients, onboarded through an access decision rather than a configuration change.</dd><dt>Still to prove</dt><dd>How many client types an organisation can allow before the access model gets muddy.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Essay: Missions, Not Chats</a></section><section class="pn" data-for="factory"><h3>Sinapsi Factory</h3><p>The part that knows the platform's rules and procedures. It splits work into missions, starts specialised sessions and checks what comes back. The session that builds a change never merges it.</p><dl><dt>In an enterprise</dt><dd>The internal agent platform team, with change management for work done by agents.</dd><dt>Still to prove</dt><dd>Reviewer capacity, and what independent review costs per change.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Essay: Missions, Not Chats</a></section><section class="pn" data-for="applications"><h3>Applications</h3><p>Services built for people on top of the platform. Agents reach them only through tools, and an application may not bypass a platform service.</p><dl><dt>In an enterprise</dt><dd>Product teams' services that consume platform building blocks.</dd><dt>Still to prove</dt><dd>How much it costs a team to onboard an application to the corridor.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/10-the-tool-plane.md">Essay: The Tool Plane</a></section><section class="pn" data-for="corridor"><h3>The corridor</h3><p>One gateway for every call. It checks who is calling, classifies the call as read, write or secret, and writes the decision to an audit stream before anything reaches a system. There are no side doors.</p><dl><dt>In an enterprise</dt><dd>A central policy enforcement point, so teams add tools without adding credentials.</dd><dt>Still to prove</dt><dd>Throughput, tenant isolation, and who owns the policy.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/03-the-trust-plane.md">Essay: The Trust Plane</a></section><section class="pn" data-for="platform"><h3>Platform services</h3><p>The building blocks that make the platform work: git forge, identity, event bus, secrets and certificates, deploys, audit, monitoring and the tool servers. Every state-changing action emits an event.</p><dl><dt>In an enterprise</dt><dd>The platform engineering foundations an organisation already runs.</dd><dt>Still to prove</dt><dd>Operating cost, and keeping the audit trail complete across many teams.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/11-identity-and-secrets.md">Essay: Identity and Secrets Without a Human in the Loop</a></section><section class="pn" data-for="sites"><h3>Sites and degraded mode</h3><p>Two sites run the same playbooks, and a repair path exists for the day the platform itself is down.</p><dl><dt>In an enterprise</dt><dd>Multi-region operation, break-glass access and recovery for the agent plane.</dd><dt>Still to prove</dt><dd>Failover drills at real scale.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/08-the-self-coded-stack.md">Essay: One Stack, Reproduced</a></section><section class="pn" data-for="canon"><h3>The Canon</h3><p>Governance as code: a map of what exists, the rules that regulate it and the sanctioned procedures, kept as typed records in git and shown as a graph. Every rule says whether it is mechanised, reviewed or on the honour system.</p><dl><dt>In an enterprise</dt><dd>A control library that reports real enforcement status, like control effectiveness in an audit.</dd><dt>Still to prove</dt><dd>Label drift across hundreds of rules.</dd></dl><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/01-documentation-that-cannot-lie.md">Essay: Documentation That Cannot Lie</a></section></div>
+        <div class="diagram"><svg class="dg" viewBox="0 0 400 660" role="group" aria-label="Architecture diagram. People build through the Sinapsi Dev Factory and consume through applications or AI assistants. Applications plug into the platform of services, which holds the agent corridor and the data platform. Governance as code rules all of it. Select a block to read about it."><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--act)"/></marker><marker id="ac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--t-t)"/></marker><marker id="af" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--i-t)"/></marker><marker id="ad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--d-t)"/></marker></defs><g class="hit" data-k="governance" role="button" tabindex="0" aria-pressed="false" aria-label="Governance as code"><path class="sh can" d="M12 8 H388 a8 8 0 0 1 8 8 V644 a8 8 0 0 1 -8 8 a8 8 0 0 1 -8 -8 V90 a8 8 0 0 0 -8 -8 H12 a8 8 0 0 1 -8 -8 V16 a8 8 0 0 1 8 -8 Z"/><text class="ti k" x="16" y="30">Governance as code</text><rect class="chip" x="16" y="44" width="36" height="22" rx="11"/><text class="ct" x="34.0" y="59" text-anchor="middle">Map</text><rect class="chip" x="58" y="44" width="48" height="22" rx="11"/><text class="ct" x="82.0" y="59" text-anchor="middle">Rules</text><rect class="chip" x="112" y="44" width="81" height="22" rx="11"/><text class="ct" x="152.5" y="59" text-anchor="middle">Procedures</text><text class="su" x="205" y="59">enforcement stated per rule</text></g><g class="hit" data-k="factory" role="button" tabindex="0" aria-pressed="false" aria-label="Sinapsi Dev Factory"><rect class="sh fac" x="4" y="96" width="120" height="556" rx="8"/><text class="sl" x="118" y="116" text-anchor="end">people build</text><text class="ti f" x="14" y="148">Sinapsi</text><text class="ti f" x="14" y="168">Dev Factory</text><text class="su" x="14" y="190">Agent sessions</text><text class="su" x="14" y="206">that know the</text><text class="su" x="14" y="222">rules</text><text class="sl" x="118" y="285" text-anchor="end">builds</text><text class="lb" x="14" y="308">SESSIONS</text><rect class="chip" x="14" y="316" width="100" height="20" rx="10"/><text class="ct" x="64" y="330" text-anchor="middle">Orchestrator</text><rect class="chip" x="14" y="342" width="100" height="20" rx="10"/><text class="ct" x="64" y="356" text-anchor="middle">Designer</text><rect class="chip" x="14" y="368" width="100" height="20" rx="10"/><text class="ct" x="64" y="382" text-anchor="middle">Builder</text><rect class="chip" x="14" y="394" width="100" height="20" rx="10"/><text class="ct" x="64" y="408" text-anchor="middle">Reviewer</text><text class="sl" x="118" y="433" text-anchor="end">operates</text><text class="su" x="14" y="480">Work runs as</text><text class="su" x="14" y="496">missions.</text><text class="su" x="14" y="532">The builder</text><text class="su" x="14" y="548">never merges</text><text class="su" x="14" y="564">its own work.</text></g><path class="cn" d="M24 82 L24 92" marker-end="url(#ac)"/><path class="af" d="M104 96 L104 86" marker-end="url(#af)"/><text class="sl" x="96" y="93" text-anchor="end">proposes</text><g class="hit" data-k="people" role="button" tabindex="0" aria-pressed="false" aria-label="People"><rect class="sh box" x="136" y="96" width="234" height="50" rx="8"/><text class="ti" x="148" y="118">People</text><text class="su" x="148" y="136">Build, decide and consume</text></g><path class="ar" d="M136 112 L128 112" marker-end="url(#ah)"/><path class="ar" d="M305 146 L305 162" marker-end="url(#ah)"/><path class="ar" d="M186 146 L186 248" marker-end="url(#ah)"/><text class="su" x="178" y="204" text-anchor="end">screens</text><g class="hit" data-k="people" role="button" tabindex="0" aria-pressed="false" aria-label="AI assistants"><rect class="sh box" x="240" y="166" width="130" height="62" rx="8"/><text class="ti2" x="250" y="186">AI assistants</text><text class="su" x="250" y="203">Claude, ChatGPT,</text><text class="su" x="250" y="219">chat lanes</text></g><path class="ar" d="M305 228 L305 248" marker-end="url(#ah)"/><text class="su" x="313" y="243">tools</text><g class="hit" data-k="applications" role="button" tabindex="0" aria-pressed="false" aria-label="Applications"><rect class="sh box" x="136" y="252" width="234" height="74" rx="8"/><text class="ti" x="148" y="275">Applications</text><text class="su" x="148" y="292">Plug into platform services</text><rect class="chip" x="146" y="298" width="94" height="22" rx="11"/><text class="ct" x="193.0" y="313" text-anchor="middle">Control room</text><rect class="chip" x="246" y="298" width="55" height="22" rx="11"/><text class="ct" x="273.5" y="313" text-anchor="middle">Agenda</text><rect class="chip" x="307" y="298" width="42" height="22" rx="11"/><text class="ct" x="328.0" y="313" text-anchor="middle">Docs</text></g><path class="ar" d="M200 326 L200 346" marker-end="url(#ah)"/><text class="su" x="210" y="341">services and live views</text><g class="hit" data-k="platform" role="button" tabindex="0" aria-pressed="false" aria-label="Platform of services"><rect class="sh box" x="136" y="350" width="234" height="302" rx="8"/><text class="ti" x="148" y="373">Platform of services</text><text class="su" x="148" y="391">The enterprise at scale</text><rect class="chip" x="146" y="548" width="68" height="22" rx="11"/><text class="ct" x="180.0" y="563" text-anchor="middle">Identity</text><rect class="chip" x="220" y="548" width="62" height="22" rx="11"/><text class="ct" x="251.0" y="563" text-anchor="middle">Secrets</text><rect class="chip" x="288" y="548" width="74" height="22" rx="11"/><text class="ct" x="325.0" y="563" text-anchor="middle">Git forge</text><rect class="chip" x="146" y="576" width="62" height="22" rx="11"/><text class="ct" x="177.0" y="591" text-anchor="middle">Deploys</text><rect class="chip" x="214" y="576" width="48" height="22" rx="11"/><text class="ct" x="238.0" y="591" text-anchor="middle">Audit</text><rect class="chip" x="268" y="576" width="81" height="22" rx="11"/><text class="ct" x="308.5" y="591" text-anchor="middle">Monitoring</text><rect class="chip" x="146" y="604" width="74" height="22" rx="11"/><text class="ct" x="183.0" y="619" text-anchor="middle">Event bus</text><rect class="chip" x="226" y="604" width="94" height="22" rx="11"/><text class="ct" x="273.0" y="619" text-anchor="middle">Certificates</text><text class="su" x="148" y="642">Two sites, with a repair path</text></g><g class="hit" data-k="corridor" role="button" tabindex="0" aria-pressed="false" aria-label="Agent corridor"><rect class="sh cor" x="146" y="402" width="214" height="46" rx="6"/><text class="ti2 c" x="156" y="422">Agent corridor</text><text class="su" x="156" y="439">Identity, effect, approval</text></g><g class="hit" data-k="dataplatform" role="button" tabindex="0" aria-pressed="false" aria-label="Data platform"><rect class="sh dat" x="146" y="456" width="214" height="82" rx="6"/><text class="ti2 d" x="156" y="476">Data platform</text><text class="su" x="156" y="495">The Data Spine: streaming,</text><text class="su" x="156" y="511">Streamhouse, analytical plane.</text><text class="su" x="156" y="527">Events, SQL, REST and MCP.</text></g><path class="af" d="M124 281 L133 281" marker-end="url(#af)"/><path class="af" d="M124 429 L133 429" marker-end="url(#af)"/><path class="cn" d="M380 289 L373 289" marker-end="url(#ac)"/><path class="cn" d="M380 373 L373 373" marker-end="url(#ac)"/></svg></div>
+        <div class="panels" id="panels"><p class="hint" id="hint" hidden>Select a block, or walk through them in order.</p><div class="tour" hidden><button type="button" id="tprev">Back</button><span id="tstep" class="mono" aria-live="polite"></span><button type="button" id="tnext" class="p">Next</button></div><section class="pn" data-for="governance"><h3>Governance as code</h3><p>The map of what exists, the rules and the sanctioned procedures, as typed records in git. Every rule states how it is enforced.</p><dl><dt>In an enterprise</dt><dd>A control library with real enforcement status.</dd></dl><a href="governance.html">Deep dive: governance as code &rarr;</a></section><section class="pn" data-for="factory"><h3>Sinapsi Dev Factory</h3><p>Agent sessions that know the rules and do the work: design, build, review, operate. People build through it.</p><dl><dt>In an enterprise</dt><dd>An internal developer platform whose workforce is agents.</dd></dl><a href="factory.html">Deep dive: the Factory &rarr;</a></section><section class="pn" data-for="people"><h3>People and AI assistants</h3><p>People build through the Factory. They consume through an application's screen, or through an AI assistant that calls the application's tools.</p><dl><dt>In an enterprise</dt><dd>Employees and their approved assistants, each with its own identity.</dd></dl><a href="corridor.html">Deep dive: one agent call &rarr;</a></section><section class="pn" data-for="applications"><h3>Applications</h3><p>Built on platform services, never around them. A screen for people, tools for agents, and the same answer for both.</p><dl><dt>In an enterprise</dt><dd>Product teams' services on shared building blocks.</dd></dl><a href="control-room.html">Deep dive: the control room, an application &rarr;</a></section><section class="pn" data-for="platform"><h3>Platform of services</h3><p>Identity, secrets, forge, deploys, audit, monitoring and an event bus, on two sites with a repair path.</p><dl><dt>In an enterprise</dt><dd>The platform engineering foundations, multi-region.</dd></dl><a href="corridor.html">Deep dive: the agent corridor &rarr;</a></section><section class="pn" data-for="corridor"><h3>Agent corridor</h3><p>One gateway for every agent call: who is calling, what the call does, and whether a person must be asked.</p><dl><dt>In an enterprise</dt><dd>A central policy enforcement point.</dd></dl><a href="corridor.html">Deep dive: one agent call &rarr;</a></section><section class="pn" data-for="dataplatform"><h3>Data platform</h3><p>The Data Spine: streaming and event-driven at its core, a Streamhouse for current state, and an analytical plane kept in sync. A design study, not yet running in the lab.</p><dl><dt>In an enterprise</dt><dd>Shared current state for applications and agents.</dd></dl><a href="data-platform.html">Deep dive: the data platform &rarr;</a></section></div>
       </div>
+    </section>
+
+    <section class="sec" id="deep-dives">
+      <div class="eyebrow">Deep dives</div>
+      <h2>One bigger drawing for each part</h2>
+      <div class="dd"><a href="factory.html" style="--c:var(--i-t)"><b>Factory</b><span>From a goal to a merged change</span><i>Open &rarr;</i></a><a href="governance.html" style="--c:var(--t-t)"><b>Governance</b><span>From a rule to its enforcement</span><i>Open &rarr;</i></a><a href="corridor.html" style="--c:var(--act)"><b>Corridor</b><span>One agent call, start to finish</span><i>Open &rarr;</i></a><a href="data-platform.html" style="--c:var(--d-t)"><b>Data platform</b><span>Publish once, keep it current, serve it</span><i>Open &rarr;</i></a><a href="control-room.html" style="--c:var(--ink)"><b>Control room</b><span>One cockpit, one door, one source</span><i>Open &rarr;</i></a></div>
     </section>
 
     <section class="sec" id="manifest">
       <div class="eyebrow">The manifest</div>
-      <h2>Six commitments the platform is built on</h2>
-      <ul class="man">
-        <li><b>A bounded door, never raw access.</b><span>An agent gets a small, audited surface to a system, not its credentials.</span></li>
-        <li><b>One source, two consumers.</b><span>People and agents read the same service, and a check proves they get the same answer.</span></li>
-        <li><b>Control from reversibility, review and scope.</b><span>Gating every command does not scale. Making work easy to undo, reviewed and narrow does.</span></li>
-        <li><b>Say how each rule is enforced.</b><span>A rule labelled as enforced when it is not does more harm than no rule.</span></li>
-        <li><b>Authority is earned.</b><span>Autonomy is granted per class of change, decays if unproven and can be revoked in one move.</span></li>
-        <li><b>Work is a mission, not a chat.</b><span>Bounded scope, an owner, a full context bundle and an independent check on the way back.</span></li>
-      </ul>
+      <h2>Eight commitments</h2>
+      <ul class="man titles"><li>A bounded door, never raw access</li><li>One source, two consumers</li><li>Control from reversibility, review and scope</li><li>Say how each rule is enforced</li><li>Authority is earned</li><li>Work is a mission, not a chat</li><li>Publish once, keep it current, serve it</li><li>Thin applications on shared state</li></ul>
     </section>
 
     <section class="sec" id="enterprise">
       <div class="eyebrow">From a home server to an enterprise</div>
-      <h2>Why the same shape should scale</h2>
-      <p class="lead">Each pattern below runs today across two sites of my own infrastructure. The right-hand column says what I have not proven yet, because that is where the real work for an organisation sits.</p>
-      <div class="tbl">
-        <table>
-          <thead><tr><th>Pattern</th><th>In my lab</th><th>In an enterprise</th><th>Still to prove</th></tr></thead>
-          <tbody>
-            <tr><td>One bounded door</td><td>All agent actions cross one gateway. Tools are scoped to an identity and every decision is audited.</td><td>A central policy enforcement point, so teams add tools without adding credentials.</td><td>Throughput, tenant isolation and who owns the policy.</td></tr>
-            <tr><td>One source, two consumers</td><td>The cockpit and the agents read one relationship service. A same-answer check compares both.</td><td>A service catalog and system map that people and agents query the same way.</td><td>Keeping it fresh across many teams' data.</td></tr>
-            <tr><td>Governance as code, honestly labelled</td><td>Rules are typed records in git. Each says mechanised, reviewed or honour system.</td><td>A control library that reports real enforcement, like control-effectiveness in an audit.</td><td>Label drift across hundreds of rules.</td></tr>
-            <tr><td>Graduated autonomy</td><td>Actions are sorted by blast radius: green proceeds, yellow asks, red is never autonomous. Authorization layers run in shadow before they enforce.</td><td>Risk-tiered approval for agent actions, tuned with evidence.</td><td>Thresholds against real incident cost.</td></tr>
-            <tr><td>Missions with separation of duties</td><td>The session that builds a change never merges it. An independent review comes first.</td><td>Change management for work done by agents.</td><td>Reviewer capacity and its cost.</td></tr>
-            <tr><td>Degraded mode</td><td>Two sites, the same playbooks and a documented repair path.</td><td>Break-glass access and recovery for the agent plane itself.</td><td>Failover drills at real scale.</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h2>The same shape, at scale</h2>
+      <div class="pairs"><div class="pair2 pairhead"><span>In my lab</span><em></em><span>In an enterprise</span></div><div class="pair2"><span>One gateway for every agent call</span><em>&rarr;</em><span>Central policy enforcement point</span></div><div class="pair2"><span>Cockpit and agents read one service</span><em>&rarr;</em><span>One catalog for people and agents</span></div><div class="pair2"><span>Rules as records, enforcement stated</span><em>&rarr;</em><span>Control library with real status</span></div><div class="pair2"><span>Green, yellow, red by blast radius</span><em>&rarr;</em><span>Risk-tiered approval for agent actions</span></div><div class="pair2"><span>The builder never merges</span><em>&rarr;</em><span>Change management for agent work</span></div><div class="pair2"><span>Event bus today, Streamhouse as a design</span><em>&rarr;</em><span>Shared current state</span></div><div class="pair2"><span>Two sites and a repair path</span><em>&rarr;</em><span>Multi-region and break-glass</span></div></div>
       <div class="limits">
         <h3>What this does not show</h3>
-        <ul>
-          <li>It is one operator on a home-scale lab across two sites. There is no multi-tenant load, no cost model and no organisational change to manage.</li>
-          <li>Some authorization layers still run in shadow mode on purpose. I observe before I enforce.</li>
-          <li>The claim is the shape of the platform and the discipline around it. It is not a claim of enterprise readiness.</li>
-        </ul>
+        <ul><li>One operator, home scale, two sites. No multi-tenant load and no cost model.</li><li>Some authorization layers run in shadow mode on purpose.</li><li>The data platform is a design study, not built here.</li><li>The claim is the shape and the discipline, not enterprise readiness.</li></ul>
       </div>
     </section>
 
@@ -313,148 +355,34 @@ footer .links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(
       <div class="eyebrow">Field notes</div>
       <h2>What running it taught me</h2>
       <div class="notes">
-        <article class="note">
-          <span class="tag">Measure the default</span>
-          <h3>A fleet default can be set upstream</h3>
-          <p>Running Claude Code across many hosts, I found that the starting permission mode of sessions started from the app was assigned by the service, not by host configuration. I tried the launch flag, user settings and the managed settings tier. None changed it, and public bug reports described the same behaviour. I kept the control in the gateway and the always-on hooks, where I own it. It later changed upstream with no change on my side.</p>
-        </article>
-        <article class="note">
-          <span class="tag">Delete with evidence</span>
-          <h3>Rarely used is not dead</h3>
-          <p>An audit of my own repository refuted about two thirds of the "this is dead" claims. A yearly certificate rotation and a recovery path are both rare and both load-bearing. Deletion now needs positive evidence, and disabling comes first.</p>
-        </article>
-        <article class="note">
-          <span class="tag">Prove the claim</span>
-          <h3>A green pipeline proves a job exited zero</h3>
-          <p>Success is verified on the host or on the event bus. A same-answer check does this for the control room, and the decision trail does it for every authorization.</p>
-        </article>
-        <article class="note">
-          <span class="tag">Register what runs</span>
-          <h3>A register proves shape, not completeness</h3>
-          <p>A census of the fleet found third-party software that nobody was updating. A check can show that the register is well formed. It cannot show that it is complete, so the platform reports the gap the morning after.</p>
-        </article>
+        <article class="note"><h3>A fleet default can be set upstream</h3><p>I measured three host settings before finding that the service assigned the mode. The control stays where I own it.</p></article>
+        <article class="note"><h3>Rarely used is not dead</h3><p>An audit of my own repository refuted about two thirds of the "this is dead" claims.</p></article>
+        <article class="note"><h3>A green pipeline proves a job exited zero</h3><p>Success is checked on the host or on the event bus.</p></article>
+        <article class="note"><h3>A register proves shape, not completeness</h3><p>A census found software that nobody was updating.</p></article>
       </div>
-    </section>
-
-    <section class="sec case" id="control-room">
-      <div class="eyebrow">Case study</div>
-      <h2>The control room</h2>
-      <p class="lead">The human face of the platform: one cockpit for the person, one door for the agents, and one source of truth behind both.</p>
-
-      <h3 class="sub3">The problem</h3>
-      <p class="body">A fleet of agents is only useful if I can see what it is doing and answer yes or no from wherever I am. Chat threads do not give me that. Decisions get lost, and each tool describes the lab a little differently.</p>
-
-      <h3 class="sub3">What I built</h3>
-      <ul class="pts">
-        <li><strong>A decision inbox called Now.</strong> Anything an agent cannot decide alone lands as a card with the evidence and two buttons. The answer is recorded once and applied once.</li>
-        <li><strong>A mission ledger.</strong> Work is split into bounded missions, each with an owner, a status and a link to the change that did it. I approve goals. An orchestrator session starts the work and checks what comes back.</li>
-        <li><strong>A relationship map.</strong> One read-only service knows how the parts of the platform connect. The cockpit and the agents read it through the same door.</li>
-      </ul>
-
-      <div class="flow" role="img" aria-label="Diagram: a person on a phone and agents both reach one door, which reads one source of truth.">
-        <div class="node"><b>Me, on a phone</b><span>Decision inbox, missions, map</span></div>
-        <div class="arrow" aria-hidden="true">&rarr;</div>
-        <div class="node door"><b>One door</b><span>Identity, policy and an audit trail on every call</span></div>
-        <div class="arrow" aria-hidden="true">&rarr;</div>
-        <div class="node"><b>One source of truth</b><span>The map and the mission record, read only</span></div>
-      </div>
-      <p class="flowcap">Agents enter through the same door. Same question, same answer.</p>
-
-      <div class="screens">
-        <div class="screencol">
-          <div class="phone"><div class="screen">
-            <h4>Now <small>2 waiting</small></h4>
-            <div class="dc">
-              <span class="tagc y">Yellow</span>
-              <strong>Approve rule set v3 for the staging door?</strong>
-              <p>Reviewed by an independent session. Changes who may call two tools.</p>
-              <div class="btns"><span class="btn p">Approve</span><span class="btn">Not yet</span></div>
-            </div>
-            <div class="dc">
-              <span class="tagc g">Green</span>
-              <strong>Restart the stateless indexer job</strong>
-              <p>Proceeded on its own and was logged. Done 2 min ago.</p>
-            </div>
-          </div></div>
-          <p class="demo">Demo data, invented for this page</p>
-        </div>
-        <div class="screencol">
-          <div class="phone"><div class="screen">
-            <h4>Work <small>3 missions</small></h4>
-            <div class="dc"><div class="mi"><span>Draft access policy</span><span class="pill rev">In review</span></div><span class="mid">M-101 &middot; policy persona</span></div>
-            <div class="dc"><div class="mi"><span>Rotate the demo certificate</span><span class="pill done">Done</span></div><span class="mid">M-102 &middot; ops persona</span></div>
-            <div class="dc"><div class="mi"><span>Index the new essay</span><span class="pill run">Running</span></div><span class="mid">M-103 &middot; docs persona</span></div>
-          </div></div>
-          <p class="demo">Demo data, invented for this page</p>
-        </div>
-      </div>
-
-      <h3 class="sub3">How it was built</h3>
-      <ul class="pts">
-        <li><strong>Journey first.</strong> I modelled who uses it and which decision they face before drawing any screen.</li>
-        <li><strong>Phone first.</strong> A screen counts as done only after I have looked at a real rendering on a phone.</li>
-        <li><strong>Separation of duties.</strong> The session that builds a change does not merge it.</li>
-        <li><strong>Proof over claims.</strong> A same-answer check compares what the cockpit shows with what an agent receives and reports whether they match.</li>
-        <li><strong>Always current.</strong> The map follows a merge by itself, in under a minute and without a restart.</li>
-      </ul>
-    </section>
-
-    <section class="sec" id="essays">
-      <div class="eyebrow">Essays</div>
-      <h2>The thinking behind it</h2>
-      <p class="lead">Fourteen first-person essays on building and operating software with AI agents. They hold the reasoning, not the tooling. Every example is invented and no real system details appear. A fifteenth, on honest enforcement labels, is in draft.</p>
-      <ol class="ess">
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/00-agentic-delivery-manifesto.md">The manifesto</a><p>Control comes from reversibility, review and scope, not from gating every command.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/01-documentation-that-cannot-lie.md">Documentation That Cannot Lie</a><p>Make the running system the source of truth and flag any claim that no evidence backs.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/02-grounding-the-agent.md">Grounding the Agent</a><p>Memory inside a session is a cache with no invalidation. Ground every session in a live source.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/03-the-trust-plane.md">The Trust Plane</a><p>Never hand an agent raw credentials. Route every action through a policy-enforcing, audited plane.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/04-proving-equivalence.md">Proving You Didn't Break It</a><p>For migrations, run old and new side by side on real input and diff the behaviour.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/05-journey-first-design.md">Journey-First Design</a><p>Model the user, the job and the decision points before any pixel.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/06-deterministic-ui.md">Deterministic UI</a><p>Every surface traces to an authored spec and a shared design canon.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/07-the-council.md">The Council</a><p>One model is a single point of failure for judgement. Consult several and weigh, do not vote.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/08-the-self-coded-stack.md">One Stack, Reproduced</a><p>One canonical stack, with conventions shared as versioned packages.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/09-missions-not-chats.md">Missions, Not Chats</a><p>Structure work as governed missions with a complete context bundle.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/10-the-tool-plane.md">The Tool Plane</a><p>An agent is only as safe as its tools, so treat the tool surface as infrastructure.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/11-identity-and-secrets.md">Identity and Secrets Without a Human in the Loop</a><p>Scoped identity per actor and secrets delivered at runtime, never pasted.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/12-the-decision-trail.md">The Decision Trail</a><p>Emit every decision as a typed, correlated event so "why was this allowed?" is one query.</p></div></li>
-        <li><div><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/13-continuous-trust.md">Continuous Trust</a><p>Authority to proceed alone is earned, decays if unproven and can be revoked in one move.</p></div></li>
-      </ol>
     </section>
 
     <section class="sec" id="code">
       <div class="eyebrow">Code</div>
       <h2>The doors, as running code</h2>
-      <ul class="srv">
-        <li><code>Sshgw.Mcp</code><p>An agent's SSH access as a bounded door: a per-server command whitelist, each command classified by effect, every decision sent to an audit stream.</p></li>
-        <li><code>Sinapsi.SentinelConsole</code><p>One live screen of the authorization decisions across the layers.</p></li>
-        <li><code>StepCa.Mcp</code><p>Issue and inspect certificates from an internal CA through a six-tool surface.</p></li>
-        <li><code>Zitadel.Mcp</code><p>Machine users, OIDC apps and grants on an identity server, with the bearer held server-side.</p></li>
-        <li><code>Infisical.Mcp</code><p>Runtime secret delivery behind four tools, so no one pastes a credential.</p></li>
-        <li><code>Sinapsi.Indexer</code><p>Searchable memory over source-of-truth git repos, kept fresh by push events.</p></li>
-      </ul>
-      <p class="small">Thirteen MCP servers and four shared libraries in total, written for .NET 8. It is a curated, read-only snapshot of exploratory code, and it changes when I learn something. <a href="https://github.com/insalata-fresca/sinapsi-mcp">Browse it on GitHub</a>.</p>
+      <div class="chipsrow"><code>Sshgw.Mcp</code><code>Sinapsi.SentinelConsole</code><code>StepCa.Mcp</code><code>Zitadel.Mcp</code><code>Infisical.Mcp</code><code>Sinapsi.Indexer</code><code>Forge.Mcp</code><code>Github.Mcp</code><span>and five more</span></div>
+      <p class="small">Thirteen MCP servers and four shared libraries, written for .NET 8. <a href="https://github.com/insalata-fresca/sinapsi-mcp">Browse the code on GitHub</a>.</p>
     </section>
   </main>
-
   <footer>
-    <div class="links">
-      <a href="https://github.com/insalata-fresca">GitHub</a>
-      <a href="https://github.com/insalata-fresca/sinapsi-mcp">Code</a>
-      <a href="https://github.com/insalata-fresca/sinapsi-design">Essays</a>
-      <a id="mail" href="https://github.com/insalata-fresca" data-u="insalata.fresca" data-d="gmail.com">Contact</a>
-    </div>
-    <p>Personal research. It contains no employer or client material and no operational details of any real system. Essays are licensed CC BY 4.0.</p>
+    <div class="links"><a href="https://github.com/insalata-fresca">GitHub</a><a href="https://github.com/insalata-fresca/sinapsi-mcp">Code</a><a href="https://github.com/insalata-fresca/sinapsi-design">Essays</a><a id="mail" href="https://github.com/insalata-fresca" data-u="insalata.fresca" data-d="gmail.com">Contact</a></div>
+    <p>Personal research and architecture studies by Stefano Ursino. The designs are my own, generalised: no employer or client data and no operational details of any real system. Essays are licensed CC BY 4.0.</p>
   </footer>
 </div>
 <script>
 (function () {
   var w = document.getElementById('archwrap'); if (!w) return;
-  var order = ['interfaces','factory','applications','corridor','platform','sites','canon'];
-  var names = {interfaces:'Interfaces',factory:'Sinapsi Factory',applications:'Applications',corridor:'The corridor',platform:'Platform services',sites:'Sites and degraded mode',canon:'The Canon'};
+  var order = ['governance','factory','people','applications','platform','corridor','dataplatform'];
+  var names = {governance:'Governance as code',factory:'Sinapsi Dev Factory',people:'People and AI assistants',applications:'Applications',platform:'Platform of services',corridor:'Agent corridor',dataplatform:'Data platform'};
   var hits = w.querySelectorAll('.hit'), pns = w.querySelectorAll('.pn');
   var tour = w.querySelector('.tour'), hint = document.getElementById('hint');
   var step = document.getElementById('tstep'), prev = document.getElementById('tprev'), next = document.getElementById('tnext');
-  var cur = 'corridor', started = false;
+  var cur = 'factory', started = false;
   tour.hidden = false; hint.hidden = false;
   function show(k, scroll) {
     cur = k;
@@ -489,5 +417,6 @@ footer .links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(
   a.setAttribute('href', 'mailto:' + m); a.textContent = m;
 })();
 </script>
+
 </body>
 </html>
