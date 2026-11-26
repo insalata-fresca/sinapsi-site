@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The knowledge service | Sinapsi by Stefano Ursino</title>
+<meta name="description" content="The knowledge service holds what is known, in domains with a scope and an owner. Governance is the one domain that binds.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sinapsi.insalata-fresca.ch/knowledge.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The knowledge service | Sinapsi by Stefano Ursino">
+<meta property="og:description" content="The knowledge service holds what is known, in domains with a scope and an owner. Governance is the one domain that binds.">
+<meta property="og:url" content="https://sinapsi.insalata-fresca.ch/knowledge.html">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>body{margin:0}
+/* Layout concept: the Sinapsi control-center palette (cool grey paper, blue-grey ink, one action blue,
+   teal / indigo / amber for meaning). The page opens on the architecture drawing, then explains why it transfers. */
+:root {
+  --bg: #F5F6F6;
+  --paper: #FFFFFF;
+  --line: #D8E1E5;
+  --ink: #263238;
+  --ink2: #374649;
+  --muted: #5E7079;
+  --act: #0062C4;
+  --act-tint: #E6F0FB;
+  --on-act: #FFFFFF;
+  --t-t: #00684F; --t-b: #E3F4EF;
+  --i-t: #3A2BD6; --i-b: #ECEBFF;
+  --a-t: #7A4A00; --a-b: #FDF1DC;
+  --r-t: #A1221B; --r-b: #FBECEB;
+  --g-t: #4F5F66; --g-b: #EEF1F2;
+  --d-t: #A3255F; --d-b: #FBE9F1; --k-t: #566400; --k-b: #F1F5D8;
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
+    --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
+    --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
+    --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C; --d-t: #F28DB9; --d-b: #33141F; --k-t: #C5D86D; --k-b: #242A0B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1518; --paper: #162026; --line: #2A3A42; --ink: #E3EAED; --ink2: #C9D5DA; --muted: #93A6AF;
+  --act: #5AA8FF; --act-tint: #12283F; --on-act: #06192E;
+  --t-t: #4FD1A8; --t-b: #0F2B24; --i-t: #A79BFF; --i-b: #1D1A44;
+  --a-t: #E0A44A; --a-b: #2E2208; --r-t: #EE7C69; --r-b: #301513; --g-t: #A9B8BF; --g-b: #1B262C; --d-t: #F28DB9; --d-b: #33141F; --k-t: #C5D86D; --k-b: #242A0B;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+a { color: var(--act); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 3px solid var(--act); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+.mono { font-family: var(--font-mono); }
+
+/* masthead */
+.mast { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); }
+.brand svg { width: 34px; height: 22px; flex: none; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-family: var(--font-mono); font-size: 12.5px; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--act); }
+
+/* sections */
+.sec { padding-block: 52px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--act); }
+.sec > h2 { font-size: clamp(26px, 4vw, 38px); margin-top: 8px; max-width: 24ch; }
+.lead { margin-top: 14px; max-width: 64ch; color: var(--ink2); font-size: 17px; }
+.ph { outline: 2px dashed var(--a-t); outline-offset: 2px; padding: 0 4px; border-radius: 2px; }
+
+/* hero */
+.hero { padding-block: 60px 44px; }
+.hero h1 { font-size: clamp(34px, 6.4vw, 64px); font-weight: 700; margin-top: 14px; max-width: 17ch; }
+.hero .sub { margin-top: 22px; font-size: clamp(17px, 2.2vw, 20px); max-width: 60ch; color: var(--ink2); }
+.hero .by { margin-top: 24px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+
+/* architecture diagram */
+.archwrap { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 32px 48px; align-items: start; }
+@media (max-width: 860px) { .archwrap { grid-template-columns: minmax(0, 1fr); } .diagram { max-width: 460px; } }
+.dg { width: 100%; height: auto; display: block; }
+.dg .box { fill: var(--paper); stroke: var(--line); stroke-width: 1.2; }
+.dg .fac { fill: var(--i-b); stroke: var(--i-t); stroke-width: 1.4; }
+.dg .cor { fill: var(--act-tint); stroke: var(--act); stroke-width: 1.8; }
+.dg .can { fill: var(--t-b); stroke: var(--t-t); stroke-width: 1.4; }
+.dg .deg { fill: var(--g-b); stroke: var(--line); stroke-width: 1.2; }
+.dg .ti { font: 600 16px var(--font-display); fill: var(--ink); }
+.dg .ti.f { fill: var(--i-t); } .dg .ti.c { fill: var(--act); } .dg .ti.k { fill: var(--t-t); }
+.dg .su { font: 400 12px var(--font-body); fill: var(--muted); }
+.dg .chip { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+.dg .ct { font: 500 11px var(--font-mono); fill: var(--ink2); }
+.dg .ar { stroke: var(--act); stroke-width: 1.7; fill: none; }
+.dg .cn { stroke: var(--t-t); stroke-width: 1.5; stroke-dasharray: 3 3; fill: none; }
+.read { list-style: none; display: grid; gap: 0; }
+.read li { padding-block: 16px; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+.read li:first-child { border-top: 0; padding-top: 0; }
+.read b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.read span { color: var(--ink2); font-size: 15px; }
+
+.hit { cursor: pointer; outline: none; }
+.hit:hover > .sh, .hit:focus-visible > .sh { stroke-width: 2.4; }
+.hit:focus-visible > .sh { stroke: var(--ink); }
+.hit.on > .sh { stroke: var(--ink); stroke-width: 2.8; }
+.dg .dat { fill: var(--d-b); stroke: var(--d-t); stroke-width: 1.6; }
+.dg .ti.d, .dg .ti2.d { fill: var(--d-t); }
+.dg .ti2 { font: 600 14.5px var(--font-display); fill: var(--ink); }
+.dg .ti2.c { fill: var(--act); }
+.dg .sl { font: 500 11px var(--font-mono); fill: var(--i-t); }
+.dg .lb { font: 500 10.5px var(--font-mono); fill: var(--muted); letter-spacing: 0.08em; }
+.dg .bt { font: 600 12.5px var(--font-display); fill: var(--ink); }
+.dg .af { stroke: var(--i-t); stroke-width: 1.7; fill: none; }
+.seams { margin-top: 26px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 860px) { .seams { grid-template-columns: minmax(0, 1fr); } }
+.seam { background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--i-t); border-radius: 8px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.seam.g { border-top-color: var(--t-t); } .seam.p { border-top-color: var(--act); } .seam.a { border-top-color: var(--i-t); }
+.seam h3 { font-size: 18px; } .seam p { font-size: 14.5px; color: var(--ink2); }
+.seam .tag, .bacol .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.sub3 { font-size: 19px; margin-top: 34px; }
+.body { margin-top: 10px; color: var(--ink2); max-width: 66ch; }
+.steps { list-style: none; counter-reset: s; margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 860px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; align-content: start; }
+.steps li::before { content: counter(s); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.steps b { font-family: var(--font-display); font-size: 16.5px; font-weight: 600; }
+.steps span { color: var(--ink2); font-size: 14.5px; }
+.ba { margin-top: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 820px; }
+@media (max-width: 640px) { .ba { grid-template-columns: minmax(0, 1fr); } }
+.bacol { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.bacol.on { background: var(--d-b); border-color: var(--d-t); }
+.bacol ul { list-style: none; display: grid; gap: 6px; font-size: 15px; }
+.bacol li { padding-left: 16px; position: relative; }
+.bacol li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 7px; height: 2px; background: var(--ink2); }
+.bacol p { font-size: 14px; color: var(--muted); }
+.ba + .pts { margin-top: 18px; max-width: 66ch; }
+.notes.three { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
+@media (max-width: 860px) { .notes.three { grid-template-columns: minmax(0, 1fr); } }
+.note .price { color: var(--a-t); }
+.panels { display: grid; gap: 14px; align-content: start; }
+.hint { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.tour { display: flex; align-items: center; gap: 12px; }
+.tour button { font: 600 14px var(--font-body); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; }
+.tour button.p { background: var(--act); border-color: var(--act); color: var(--on-act); }
+.tour button:focus-visible { outline: 3px solid var(--act); outline-offset: 2px; }
+.tour .mono { font-size: 12px; color: var(--muted); }
+.pn { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 10px; }
+.pn h3 { font-size: 22px; }
+.pn p { color: var(--ink2); font-size: 15.5px; }
+.pn dl { display: grid; gap: 2px; margin: 4px 0 0; }
+.pn dt { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.pn dd { margin: 0; color: var(--ink2); font-size: 15px; }
+.pn dd:last-of-type { color: var(--a-t); }
+.pn a { font-weight: 600; font-size: 14.5px; }
+[hidden] { display: none !important; }
+
+/* manifest */
+.man { margin-top: 28px; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+.man li { padding-block: 16px; border-top: 1px solid var(--line); }
+.man b { font-family: var(--font-display); font-size: 18px; font-weight: 600; display: block; }
+.man span { color: var(--ink2); font-size: 15px; }
+@media (max-width: 760px) { .man { grid-template-columns: minmax(0, 1fr); } }
+
+/* transfer table */
+.tbl { margin-top: 26px; overflow-x: auto; }
+.tbl table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14.5px; }
+.tbl th { text-align: left; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 10px 14px 10px 0; border-bottom: 2px solid var(--ink); font-weight: 500; }
+.tbl td { vertical-align: top; padding: 14px 14px 14px 0; border-bottom: 1px solid var(--line); color: var(--ink2); }
+.tbl td:first-child { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--ink); width: 17%; }
+.tbl td:last-child { color: var(--a-t); }
+
+/* field notes */
+.notes { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.note { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.note h3 { font-size: 18px; }
+.note p { font-size: 14.5px; color: var(--ink2); }
+.note .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--t-t); }
+
+/* control room */
+.case ul.pts { max-width: 66ch; }
+.pts { list-style: none; display: grid; gap: 12px; margin-top: 10px; }
+.pts li { padding-left: 18px; position: relative; color: var(--ink2); }
+.pts li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 2px; background: var(--act); }
+.pts strong { color: var(--ink); font-weight: 600; }
+.flow { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr); gap: 8px; }
+.node { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 14px; font-size: 14px; min-width: 0; }
+.node b { display: block; font-family: var(--font-display); font-size: 16px; margin-bottom: 2px; }
+.node span { color: var(--muted); }
+.node.door { background: var(--act-tint); border-color: var(--act); }
+.arrow { align-self: center; text-align: center; color: var(--act); font-family: var(--font-mono); }
+@media (max-width: 760px) { .flow { grid-template-columns: minmax(0, 1fr); } .arrow { transform: rotate(90deg); } }
+.flowcap { margin-top: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.screens { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+.screencol { width: 292px; max-width: 100%; }
+.phone { border: 1px solid var(--line); border-radius: 30px; padding: 10px; background: var(--paper); }
+.screen { border-radius: 22px; border: 1px solid var(--line); background: var(--bg); padding: 16px 14px 18px; display: grid; gap: 10px; min-height: 400px; align-content: start; }
+.screen h4 { font-size: 22px; display: flex; align-items: baseline; justify-content: space-between; }
+.screen h4 small { font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-weight: 500; }
+.dc { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; font-size: 13.5px; line-height: 1.45; }
+.dc p { color: var(--muted); }
+.tagc { justify-self: start; font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border-radius: 99px; }
+.tagc.g { background: var(--t-b); color: var(--t-t); }
+.tagc.y { background: var(--a-b); color: var(--a-t); }
+.btns { display: flex; gap: 8px; }
+.btn { font: 600 13px var(--font-body); padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); color: var(--ink); }
+.btn.p { background: var(--act); border-color: var(--act); color: var(--on-act); }
+.mi { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.mid { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.pill { font-family: var(--font-mono); font-size: 11px; white-space: nowrap; }
+.pill.run { color: var(--a-t); } .pill.done { color: var(--t-t); } .pill.rev { color: var(--i-t); }
+.demo { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; }
+
+/* limits */
+.limits { margin-top: 22px; background: var(--a-b); border: 1px solid var(--a-t); border-radius: 8px; padding: 22px; max-width: 760px; }
+.limits h3 { font-size: 19px; color: var(--a-t); }
+.limits ul { list-style: none; display: grid; gap: 8px; margin-top: 12px; color: var(--ink2); font-size: 15px; }
+.limits li { padding-left: 16px; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 7px; height: 2px; background: var(--a-t); }
+
+/* essays and code */
+.ess { list-style: none; counter-reset: e -1; margin-top: 24px; }
+.ess li { counter-increment: e; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 8px; padding-block: 12px; border-top: 1px solid var(--line); }
+.ess li::before { content: counter(e, decimal-leading-zero); font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding-top: 4px; }
+.ess a { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--ink); text-decoration: none; }
+.ess a:hover { color: var(--act); text-decoration: underline; }
+.ess p { color: var(--muted); font-size: 14.5px; }
+.srv { list-style: none; margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+@media (max-width: 760px) { .srv { grid-template-columns: minmax(0, 1fr); } }
+.srv li { border-top: 1px solid var(--line); padding-top: 12px; }
+.srv code { font-family: var(--font-mono); font-size: 13px; color: var(--act); }
+.srv p { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+.small { margin-top: 22px; color: var(--muted); font-size: 14.5px; max-width: 64ch; }
+footer { padding-block: 36px 52px; display: grid; gap: 10px; color: var(--muted); font-size: 14px; }
+footer .links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(--font-mono); font-size: 13px; }
+
+.dg .kno { fill: var(--k-b); stroke: var(--k-t); stroke-width: 1.4; }
+.dg .ti.kn, .dg .ti2.kn { fill: var(--k-t); }
+.dg .ak { stroke: var(--k-t); stroke-width: 1.7; fill: none; }
+.dg .sl.kn { fill: var(--k-t); }
+.dg .chip.gv { fill: var(--t-b); stroke: var(--t-t); }
+.dg .ct.gv { fill: var(--t-t); }
+.dg .dot { fill: var(--ink); }
+.dg .nodot { stroke: var(--line); stroke-width: 2; fill: none; }
+
+/* v7 additions */
+.hero .sub { max-width: 54ch; }
+.nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+.pn dl { margin: 0; } .pn dt { margin-top: 0; }
+.pn a, .more { font-weight: 600; font-size: 14.5px; }
+.man.titles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+@media (max-width: 860px) { .man.titles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.man.titles li { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); padding: 12px 14px; font-family: var(--font-display); font-weight: 600; font-size: 15px; line-height: 1.25; }
+.dd { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 980px) { .dd { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .dd { grid-template-columns: minmax(0, 1fr); } }
+.dd a { display: grid; gap: 6px; align-content: start; background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--c, var(--act)); border-radius: 8px; padding: 14px; text-decoration: none; color: var(--ink); }
+.dd a:hover { border-color: var(--c, var(--act)); }
+.dd b { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+.dd span { color: var(--ink2); font-size: 14px; }
+.dd i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--act); }
+.pairs { margin-top: 22px; display: grid; gap: 8px; max-width: 820px; }
+.pair2 { display: grid; grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr); align-items: center; gap: 6px; }
+.pair2 span { border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 14px; line-height: 1.3; background: var(--paper); }
+.pair2 span:last-child { background: var(--act-tint); border-color: var(--act); }
+.pair2 em { font-style: normal; text-align: center; color: var(--act); font-family: var(--font-mono); }
+.pairhead { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pairhead span { border: 0; background: none; padding: 0 2px; } .pairhead span:last-child { background: none; }
+.chipsrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.chipsrow code, .chipsrow span { font-family: var(--font-mono); font-size: 12.5px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 99px; background: var(--paper); color: var(--ink2); }
+.prove span { border-color: var(--a-t); color: var(--a-t); background: var(--a-b); }
+.prove { align-items: center; } .prove b { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-right: 4px; }
+.deephero { padding-block: 44px 8px; }
+.deephero h1 { font-size: clamp(30px, 5.4vw, 52px); margin-top: 10px; max-width: 20ch; }
+.deephero .sub { margin-top: 16px; font-size: 18px; color: var(--ink2); max-width: 56ch; }
+.crumb { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); text-decoration: none; }
+.deep .sec { padding-block: 36px; }
+.deep .archwrap { grid-template-columns: minmax(0, 520px) minmax(0, 1fr); }
+@media (max-width: 860px) { .deep .archwrap { grid-template-columns: minmax(0, 1fr); } .deep .diagram { max-width: 520px; } }
+.read span { font-size: 14.5px; }
+.duo { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; align-items: start; }
+@media (max-width: 860px) { .duo { grid-template-columns: minmax(0, 1fr); } .duo .diagram { max-width: 520px; } }
+.duo h3 { font-size: 19px; margin-bottom: 12px; }
+.last { margin-top: 18px; display: grid; gap: 10px; max-width: 640px; }
+.last a { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--ink); border-radius: 8px; padding: 14px 16px; text-decoration: none; color: var(--ink); font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.last a:hover { border-color: var(--act); } .last i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--act); white-space: nowrap; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; font-family: var(--font-mono); font-size: 13px; }
+.note p { font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap deep">
+  <header class="mast"><a class="brand" href="./" aria-label="Sinapsi, overview"><svg viewBox="0 0 34 22" aria-hidden="true"><circle cx="5" cy="11" r="4" fill="var(--act)"/><circle cx="29" cy="11" r="4" fill="var(--t-t)"/><path d="M9 11c5 0 4-6 8-6s3 12 8 12" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></svg>Sinapsi</a><nav class="nav" aria-label="Pages"><a href="./">Overview</a><a href="factory.html">Factory</a><a href="governance.html">Governance</a><a href="knowledge.html" aria-current="page">Knowledge</a><a href="corridor.html">Corridor</a><a href="data-platform.html">Data platform</a><a href="control-room.html">Control room</a></nav></header>
+  <main>
+    <section class="deephero"><a class="crumb" href="./">&larr; Overview</a><div class="eyebrow" style="margin-top:14px">Deep dive: the knowledge service</div><h1>One service, many domains</h1><p class="sub">The knowledge service holds what is known, in domains with a scope and an owner. Governance is the one domain that binds.</p></section>
+    <section class="sec"><div class="archwrap"><div class="diagram"><svg class="dg" viewBox="0 0 400 637" role="img" aria-label="Knowledge service diagram. A session, people and applications ask through the corridor, where identity decides which domains and scopes a caller may read. The knowledge service holds five domains: governance, learned, reference, personal and meaning, each present at platform, workspace or person scope. Governance is the only binding domain and the others inform. A domain changes by capture or by ratification: a reviewed change approved by a person. Governance is enforced outside the service, in the corridor, the hooks and the review gates."><defs><marker id="kh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--act)"/></marker><marker id="kc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--t-t)"/></marker><marker id="kf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--i-t)"/></marker><marker id="kd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--d-t)"/></marker><marker id="kk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--k-t)"/></marker></defs><text class="lb" x="4" y="18">WHO ASKS</text><rect class="box" x="4" y="26" width="128" height="34" rx="7"/><text class="bt" x="68.0" y="47.5" text-anchor="middle">A session</text><rect class="box" x="136" y="26" width="128" height="34" rx="7"/><text class="bt" x="200.0" y="47.5" text-anchor="middle">People</text><rect class="box" x="268" y="26" width="128" height="34" rx="7"/><text class="bt" x="332.0" y="47.5" text-anchor="middle">Applications</text><path class="ar" d="M68 60 L68 80" marker-end="url(#kh)"/><path class="ar" d="M200 60 L200 80" marker-end="url(#kh)"/><path class="ar" d="M332 60 L332 80" marker-end="url(#kh)"/><rect class="cor" x="4" y="84" width="392" height="51" rx="8"/><text class="ti c" x="16" y="107">Through the corridor</text><text class="su" x="16" y="125">Identity decides which domains and scopes a caller may read.</text><path class="ar" d="M200.0 135 L200.0 155" marker-end="url(#kh)"/><rect class="kno" x="4" y="159" width="392" height="268" rx="8"/><text class="ti kn" x="16" y="183">Knowledge service</text><text class="su" x="16" y="201">Stores, indexes and serves. One way to ask.</text><text class="lb" x="24" y="223">DOMAIN</text><text class="su" x="164" y="223" text-anchor="middle">Platform</text><text class="su" x="226" y="223" text-anchor="middle">Workspace</text><text class="su" x="288" y="223" text-anchor="middle">Person</text><text class="su" x="324" y="223">Authority</text><rect class="can" x="14" y="233" width="372" height="26" rx="6"/><text class="bt" x="24" y="250">Governance</text><circle class="dot" cx="164" cy="246" r="5"/><circle class="dot" cx="226" cy="246" r="5"/><path class="nodot" d="M283 246 H293"/><text class="bt" x="324" y="250" style="fill:var(--t-t)">Binding</text><rect class="box" x="14" y="263" width="372" height="26" rx="6"/><text class="bt" x="24" y="280">Learned</text><circle class="dot" cx="164" cy="276" r="5"/><circle class="dot" cx="226" cy="276" r="5"/><path class="nodot" d="M283 276 H293"/><text class="su" x="324" y="280">Informing</text><rect class="box" x="14" y="293" width="372" height="26" rx="6"/><text class="bt" x="24" y="310">Reference</text><circle class="dot" cx="164" cy="306" r="5"/><circle class="dot" cx="226" cy="306" r="5"/><circle class="dot" cx="288" cy="306" r="5"/><text class="su" x="324" y="310">Informing</text><rect class="box" x="14" y="323" width="372" height="26" rx="6"/><text class="bt" x="24" y="340">Personal</text><path class="nodot" d="M159 336 H169"/><path class="nodot" d="M221 336 H231"/><circle class="dot" cx="288" cy="336" r="5"/><text class="su" x="324" y="340">Informing</text><rect class="box" x="14" y="353" width="372" height="26" rx="6"/><text class="bt" x="24" y="370">Meaning</text><circle class="dot" cx="164" cy="366" r="5"/><circle class="dot" cx="226" cy="366" r="5"/><path class="nodot" d="M283 366 H293"/><text class="su" x="324" y="370">Informing</text><text class="su" x="16" y="399">Each domain has an owner, a scope and a way to change.</text><text class="su" x="16" y="415">The marks are illustrative.</text><path class="ar" d="M200.0 427 L200.0 449" marker-end="url(#kh)"/><text class="lb" x="4" y="463">HOW A DOMAIN CHANGES</text><rect class="kno" x="4" y="471" width="186" height="61" rx="8"/><text class="ti2 kn" x="14" y="490">Captured</text><text class="su" x="14" y="508">Any session adds a lesson</text><text class="su" x="14" y="524">or a document. It informs.</text><rect class="can" x="210" y="471" width="186" height="61" rx="8"/><text class="ti2 k" x="220" y="490">Ratified</text><text class="su" x="220" y="508">A reviewed change, approved</text><text class="su" x="220" y="524">by a person. It binds.</text><path class="ak" d="M190 501.5 L207 501.5" marker-end="url(#kk)"/><text class="su" x="294" y="550" text-anchor="end">Governance is knowledge that has been ratified.</text><path class="ar" d="M303 532 L303 558" marker-end="url(#kh)"/><rect class="can" x="4" y="562" width="392" height="67" rx="8"/><text class="ti k" x="16" y="585">Enforced outside the service</text><text class="su" x="16" y="603">In the corridor, the hooks and the review gates. That is why</text><text class="su" x="16" y="619">governance is drawn as its own band.</text></svg></div><ol class="read"><li><b>Service and content.</b><span>One service stores and serves. The domains are what it holds.</span></li><li><b>Domain and scope.</b><span>What it is about, and who it is for.</span></li><li><b>Only one domain binds.</b><span>Governance is knowledge that has been ratified.</span></li><li><b>Grounded, not remembered.</b><span>A session asks the service before it reasons, and again after its context is compacted.</span></li></ol></div>
+ <div class="chipsrow prove"><b>Still to prove</b><span>Freshness at scale</span><span>Scope rules for personal knowledge</span><span>A semantic layer in practice</span><span>What deserves to be ratified</span></div></section>
+    <section class="sec"><div class="eyebrow">Last stop</div><h2>The essay that argues it</h2><div class="last"><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/02-grounding-the-agent.md"><span>Grounding the Agent</span><i>Essay</i></a><a href="https://github.com/insalata-fresca/sinapsi-design/blob/main/01-documentation-that-cannot-lie.md"><span>Documentation That Cannot Lie</span><i>Essay</i></a></div></section>
+    <nav class="pager" aria-label="More"><a href="./">&larr; Overview</a><a href="corridor.html">Next deep dive: Corridor &rarr;</a></nav>
+  </main>
+  <footer>
+    <div class="links"><a href="https://github.com/insalata-fresca">GitHub</a><a href="https://github.com/insalata-fresca/sinapsi-mcp">Code</a><a href="https://github.com/insalata-fresca/sinapsi-design">Essays</a><a id="mail" href="https://github.com/insalata-fresca" data-u="insalata.fresca" data-d="gmail.com">Contact</a></div>
+    <p>Personal research and architecture studies by Stefano Ursino. The designs are my own, generalised: no employer or client data and no operational details of any real system. Essays are licensed CC BY 4.0.</p>
+  </footer>
+</div>
+<script>
+(function () {
+  var a = document.getElementById('mail'); if (!a) return;
+  var m = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+  a.setAttribute('href', 'mailto:' + m); a.textContent = m;
+})();
+</script>
+</body>
+</html>
